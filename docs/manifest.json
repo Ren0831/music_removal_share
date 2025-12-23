@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2025-12-23T05:53:48Z",
+  "generated_at": "2025-12-23T06:00:48Z",
   "pages_url": "https://ren0831.github.io/music_removal_share/",
   "latest_set_id": "pop_20251220_mg_only_sample_check_mg_only_idx_000",
   "sets": [
@@ -11,37 +11,27 @@
       "description": "MetricGAN+ ON only (listen preset), 12 epochs.",
       "items": [
         {
-          "label": "Output (idx_000)",
+          "label": "出力音源",
           "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/sample_check_idx_000.wav",
           "kind": "output"
         },
         {
-          "label": "Environment",
+          "label": "元の環境音",
           "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/environment.wav",
-          "kind": "env"
+          "kind": "target"
         },
         {
-          "label": "Mix",
-          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/mix.wav",
-          "kind": "mix"
-        },
-        {
-          "label": "Mixture",
+          "label": "混合音源",
           "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/mixture.wav",
           "kind": "mixture"
         },
         {
-          "label": "Output",
+          "label": "出力音源",
           "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/output.wav",
           "kind": "output"
         },
         {
-          "label": "Residual",
-          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/residual.wav",
-          "kind": "residual"
-        },
-        {
-          "label": "Target",
+          "label": "元の環境音",
           "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/target.wav",
           "kind": "target"
         }
@@ -54,37 +44,27 @@
       "description": "MetricGAN+ ON only (listen preset), 12 epochs.",
       "items": [
         {
-          "label": "Output",
+          "label": "出力音源",
           "path": "audio/sets/pop_20251220_mg_only_demo/import/output_demo_sched.wav",
           "kind": "output"
         },
         {
-          "label": "Environment",
+          "label": "元の環境音",
           "path": "audio/sets/pop_20251220_mg_only_demo/import/components/environment.wav",
-          "kind": "env"
+          "kind": "target"
         },
         {
-          "label": "Mix",
-          "path": "audio/sets/pop_20251220_mg_only_demo/import/components/mix.wav",
-          "kind": "mix"
-        },
-        {
-          "label": "Mixture",
+          "label": "混合音源",
           "path": "audio/sets/pop_20251220_mg_only_demo/import/components/mixture.wav",
           "kind": "mixture"
         },
         {
-          "label": "Output",
+          "label": "出力音源",
           "path": "audio/sets/pop_20251220_mg_only_demo/import/components/output.wav",
           "kind": "output"
         },
         {
-          "label": "Residual",
-          "path": "audio/sets/pop_20251220_mg_only_demo/import/components/residual.wav",
-          "kind": "residual"
-        },
-        {
-          "label": "Target",
+          "label": "元の環境音",
           "path": "audio/sets/pop_20251220_mg_only_demo/import/components/target.wav",
           "kind": "target"
         }
@@ -97,22 +77,22 @@
       "description": "Compare run (MetricGAN off vs on), packaged report exists.",
       "items": [
         {
-          "label": "Target (demo)",
+          "label": "元の環境音",
           "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/demo_environment.wav",
           "kind": "target"
         },
         {
-          "label": "Mixture (demo)",
+          "label": "混合音源",
           "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/demo_mixture.wav",
           "kind": "mixture"
         },
         {
-          "label": "Output (no MetricGAN+)",
+          "label": "出力音源（MetricGAN+なし）",
           "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/output_no_metricgan.wav",
           "kind": "output"
         },
         {
-          "label": "Output (with MetricGAN+)",
+          "label": "出力音源（MetricGAN+あり）",
           "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/output_with_metricgan.wav",
           "kind": "output"
         }
@@ -125,22 +105,22 @@
       "description": "Older compare run (report-only).",
       "items": [
         {
-          "label": "Output (baseline)",
+          "label": "出力音源（Baseline）",
           "path": "audio/sets/pop_20251210_cmp_quick_report/import/baseline_output.wav",
           "kind": "output"
         },
         {
-          "label": "Target (demo)",
+          "label": "元の環境音",
           "path": "audio/sets/pop_20251210_cmp_quick_report/import/demo_environment.wav",
           "kind": "target"
         },
         {
-          "label": "Mixture (demo)",
+          "label": "混合音源",
           "path": "audio/sets/pop_20251210_cmp_quick_report/import/demo_mixture.wav",
           "kind": "mixture"
         },
         {
-          "label": "Output (improved)",
+          "label": "出力音源（Improved）",
           "path": "audio/sets/pop_20251210_cmp_quick_report/import/improved_output.wav",
           "kind": "output"
         }
@@ -153,37 +133,22 @@
       "description": "Single training run with a few sample_check variants.",
       "items": [
         {
-          "label": "sample_check_listen.wav",
-          "path": "audio/sets/pop_20251129_listen_distill_listen/import/sample_check_listen.wav",
-          "kind": "import"
-        },
-        {
-          "label": "Environment",
+          "label": "元の環境音",
           "path": "audio/sets/pop_20251129_listen_distill_listen/import/components/environment.wav",
-          "kind": "env"
+          "kind": "target"
         },
         {
-          "label": "Mix",
-          "path": "audio/sets/pop_20251129_listen_distill_listen/import/components/mix.wav",
-          "kind": "mix"
-        },
-        {
-          "label": "Mixture",
+          "label": "混合音源",
           "path": "audio/sets/pop_20251129_listen_distill_listen/import/components/mixture.wav",
           "kind": "mixture"
         },
         {
-          "label": "Output",
+          "label": "出力音源",
           "path": "audio/sets/pop_20251129_listen_distill_listen/import/components/output.wav",
           "kind": "output"
         },
         {
-          "label": "Residual",
-          "path": "audio/sets/pop_20251129_listen_distill_listen/import/components/residual.wav",
-          "kind": "residual"
-        },
-        {
-          "label": "Target",
+          "label": "元の環境音",
           "path": "audio/sets/pop_20251129_listen_distill_listen/import/components/target.wav",
           "kind": "target"
         }
@@ -196,17 +161,12 @@
       "description": "Share candidate outputs.",
       "items": [
         {
-          "label": "Environment",
+          "label": "元の環境音",
           "path": "audio/sets/pop_20251125_best_share_best/import/components/environment.wav",
-          "kind": "env"
+          "kind": "target"
         },
         {
-          "label": "Mix",
-          "path": "audio/sets/pop_20251125_best_share_best/import/components/mix.wav",
-          "kind": "mix"
-        },
-        {
-          "label": "Output",
+          "label": "出力音源",
           "path": "audio/sets/pop_20251125_best_share_best/import/components/output.wav",
           "kind": "output"
         }

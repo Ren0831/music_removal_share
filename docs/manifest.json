@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2025-12-23T06:00:48Z",
+  "generated_at": "2025-12-23T06:12:19Z",
   "pages_url": "https://ren0831.github.io/music_removal_share/",
   "latest_set_id": "pop_20251220_mg_only_sample_check_mg_only_idx_000",
   "sets": [
@@ -35,7 +35,11 @@
           "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/target.wav",
           "kind": "target"
         }
-      ]
+      ],
+      "title_ja": "20251220_mg_only / sample_check_mg_only/idx_000",
+      "title_en": "20251220_mg_only / sample_check_mg_only/idx_000",
+      "description_ja": "MetricGAN+ ON only (listen preset), 12 epochs.",
+      "description_en": "MetricGAN+ ON only (listen preset), 12 epochs."
     },
     {
       "id": "pop_20251220_mg_only_demo",
@@ -68,7 +72,11 @@
           "path": "audio/sets/pop_20251220_mg_only_demo/import/components/target.wav",
           "kind": "target"
         }
-      ]
+      ],
+      "title_ja": "20251220_mg_only / demo",
+      "title_en": "20251220_mg_only / demo",
+      "description_ja": "MetricGAN+ ON only (listen preset), 12 epochs.",
+      "description_en": "MetricGAN+ ON only (listen preset), 12 epochs."
     },
     {
       "id": "pop_20251215_cmp_msup_quick_report",
@@ -96,7 +104,11 @@
           "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/output_with_metricgan.wav",
           "kind": "output"
         }
-      ]
+      ],
+      "title_ja": "20251215_cmp_msup_quick / report",
+      "title_en": "20251215_cmp_msup_quick / report",
+      "description_ja": "Compare run (MetricGAN off vs on), packaged report exists.",
+      "description_en": "Compare run (MetricGAN off vs on), packaged report exists."
     },
     {
       "id": "pop_20251210_cmp_quick_report",
@@ -124,7 +136,11 @@
           "path": "audio/sets/pop_20251210_cmp_quick_report/import/improved_output.wav",
           "kind": "output"
         }
-      ]
+      ],
+      "title_ja": "20251210_cmp_quick / report",
+      "title_en": "20251210_cmp_quick / report",
+      "description_ja": "Older compare run (report-only).",
+      "description_en": "Older compare run (report-only)."
     },
     {
       "id": "pop_20251129_listen_distill_listen",
@@ -152,7 +168,11 @@
           "path": "audio/sets/pop_20251129_listen_distill_listen/import/components/target.wav",
           "kind": "target"
         }
-      ]
+      ],
+      "title_ja": "20251129_listen_distill / listen",
+      "title_en": "20251129_listen_distill / listen",
+      "description_ja": "Single training run with a few sample_check variants.",
+      "description_en": "Single training run with a few sample_check variants."
     },
     {
       "id": "pop_20251125_best_share_best",
@@ -170,7 +190,11 @@
           "path": "audio/sets/pop_20251125_best_share_best/import/components/output.wav",
           "kind": "output"
         }
-      ]
+      ],
+      "title_ja": "20251125_best_share / best",
+      "title_en": "20251125_best_share / best",
+      "description_ja": "Share candidate outputs.",
+      "description_en": "Share candidate outputs."
     },
     {
       "id": "latest_5samples",
@@ -208,24 +232,56 @@
   ],
   "date_meta": {
     "2025-11-29": {
-      "summary": "Single training run with a few sample_check variants.",
-      "changes_from_prev": "metricgan: (none) -> false, distill: (none) -> true, distill_weight: (none) -> 0.6, num_epochs: (none) -> 12, batch_size: (none) -> 2, swa: (none) -> true"
+      "summary_ja": "聴感向け出力（listen + distill）",
+      "summary_en": "Listening-oriented output (listen + distill)",
+      "changes_ja": [
+        "聴感向け（listen）の出力を追加"
+      ],
+      "changes_en": [
+        "Added listening-oriented (listen) output"
+      ]
     },
     "2025-12-20": {
-      "changes_from_prev": "metricgan: (none) -> true, distill: (none) -> false, distill_weight: (none) -> 0.5, num_epochs: (none) -> 12, batch_size: (none) -> 2, swa: (none) -> true",
-      "summary": "MetricGAN+ ON only (listen preset), 12 epochs."
+      "summary_ja": "MetricGAN+のみの学習（代表）",
+      "summary_en": "MetricGAN+-only training (representative)",
+      "changes_ja": [
+        "MetricGAN+のみの学習結果を追加",
+        "demo + sample_check代表を追加"
+      ],
+      "changes_en": [
+        "Added MetricGAN+-only training result",
+        "Added demo + sample_check (representative)"
+      ]
     },
     "2025-11-25": {
-      "summary": "Share candidate outputs.",
-      "changes_from_prev": "(first date)"
+      "summary_ja": "共有候補（best出力）",
+      "summary_en": "Share candidate (best output)",
+      "changes_ja": [
+        "初回（共有候補を作成）"
+      ],
+      "changes_en": [
+        "First entry (created share candidate)"
+      ]
     },
     "2025-12-10": {
-      "summary": "Older compare run (report-only).",
-      "changes_from_prev": "metricgan: false -> (none), distill: true -> (none), distill_weight: 0.6 -> (none), num_epochs: 12 -> (none), batch_size: 2 -> (none), swa: true -> (none)"
+      "summary_ja": "比較（report）",
+      "summary_en": "Comparison (report)",
+      "changes_ja": [
+        "比較レポートを追加"
+      ],
+      "changes_en": [
+        "Added comparison report"
+      ]
     },
     "2025-12-15": {
-      "summary": "Compare run (MetricGAN off vs on), packaged report exists.",
-      "changes_from_prev": "Older compare run (report-only). -> Compare run (MetricGAN off vs on), packaged report exists."
+      "summary_ja": "比較（MetricGAN+あり/なし）",
+      "summary_en": "Comparison (with/without MetricGAN+)",
+      "changes_ja": [
+        "比較（MetricGAN+あり/なし）を追加"
+      ],
+      "changes_en": [
+        "Added comparison (with/without MetricGAN+)"
+      ]
     }
   }
 }

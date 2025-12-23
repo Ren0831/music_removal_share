@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2025-12-23T06:12:19Z",
+  "generated_at": "2025-12-23T06:39:24Z",
   "pages_url": "https://ren0831.github.io/music_removal_share/",
   "latest_set_id": "pop_20251220_mg_only_sample_check_mg_only_idx_000",
   "sets": [
@@ -8,7 +8,7 @@
       "id": "pop_20251220_mg_only_sample_check_mg_only_idx_000",
       "title": "20251220_mg_only / sample_check_mg_only/idx_000",
       "date": "2025-12-20",
-      "description": "MetricGAN+ ON only (listen preset), 12 epochs.",
+      "description": "MetricGAN+ ON only (listen preset), 12 epochs. / 評価サンプル（idx=0） / MetricGAN+使用",
       "items": [
         {
           "label": "出力音源",
@@ -38,14 +38,14 @@
       ],
       "title_ja": "20251220_mg_only / sample_check_mg_only/idx_000",
       "title_en": "20251220_mg_only / sample_check_mg_only/idx_000",
-      "description_ja": "MetricGAN+ ON only (listen preset), 12 epochs.",
-      "description_en": "MetricGAN+ ON only (listen preset), 12 epochs."
+      "description_ja": "MetricGAN+ ON only (listen preset), 12 epochs. / 評価サンプル（idx=0） / MetricGAN+使用",
+      "description_en": "MetricGAN+ ON only (listen preset), 12 epochs. / Evaluation sample (idx=0) / MetricGAN+ enabled"
     },
     {
       "id": "pop_20251220_mg_only_demo",
       "title": "20251220_mg_only / demo",
       "date": "2025-12-20",
-      "description": "MetricGAN+ ON only (listen preset), 12 epochs.",
+      "description": "MetricGAN+ ON only (listen preset), 12 epochs. / デモ音源（10秒の代表例） / MetricGAN+使用",
       "items": [
         {
           "label": "出力音源",
@@ -75,14 +75,14 @@
       ],
       "title_ja": "20251220_mg_only / demo",
       "title_en": "20251220_mg_only / demo",
-      "description_ja": "MetricGAN+ ON only (listen preset), 12 epochs.",
-      "description_en": "MetricGAN+ ON only (listen preset), 12 epochs."
+      "description_ja": "MetricGAN+ ON only (listen preset), 12 epochs. / デモ音源（10秒の代表例） / MetricGAN+使用",
+      "description_en": "MetricGAN+ ON only (listen preset), 12 epochs. / Demo sample (10s representative example) / MetricGAN+ enabled"
     },
     {
       "id": "pop_20251215_cmp_msup_quick_report",
       "title": "20251215_cmp_msup_quick / report",
       "date": "2025-12-15",
-      "description": "Compare run (MetricGAN off vs on), packaged report exists.",
+      "description": "Compare run (MetricGAN off vs on), packaged report exists. / 比較レポート用（baseline vs improved）",
       "items": [
         {
           "label": "元の環境音",
@@ -107,14 +107,14 @@
       ],
       "title_ja": "20251215_cmp_msup_quick / report",
       "title_en": "20251215_cmp_msup_quick / report",
-      "description_ja": "Compare run (MetricGAN off vs on), packaged report exists.",
-      "description_en": "Compare run (MetricGAN off vs on), packaged report exists."
+      "description_ja": "Compare run (MetricGAN off vs on), packaged report exists. / 比較レポート用（baseline vs improved）",
+      "description_en": "Compare run (MetricGAN off vs on), packaged report exists. / Comparison report (baseline vs improved)"
     },
     {
       "id": "pop_20251210_cmp_quick_report",
       "title": "20251210_cmp_quick / report",
       "date": "2025-12-10",
-      "description": "Older compare run (report-only).",
+      "description": "Older compare run (report-only). / 比較レポート用（baseline vs improved）",
       "items": [
         {
           "label": "出力音源（Baseline）",
@@ -139,14 +139,14 @@
       ],
       "title_ja": "20251210_cmp_quick / report",
       "title_en": "20251210_cmp_quick / report",
-      "description_ja": "Older compare run (report-only).",
-      "description_en": "Older compare run (report-only)."
+      "description_ja": "Older compare run (report-only). / 比較レポート用（baseline vs improved）",
+      "description_en": "Older compare run (report-only). / Comparison report (baseline vs improved)"
     },
     {
       "id": "pop_20251129_listen_distill_listen",
       "title": "20251129_listen_distill / listen",
       "date": "2025-11-29",
-      "description": "Single training run with a few sample_check variants.",
+      "description": "Single training run with a few sample_check variants. / 視聴用サンプル（listen preset設定） / 蒸留あり",
       "items": [
         {
           "label": "元の環境音",
@@ -171,14 +171,14 @@
       ],
       "title_ja": "20251129_listen_distill / listen",
       "title_en": "20251129_listen_distill / listen",
-      "description_ja": "Single training run with a few sample_check variants.",
-      "description_en": "Single training run with a few sample_check variants."
+      "description_ja": "Single training run with a few sample_check variants. / 視聴用サンプル（listen preset設定） / 蒸留あり",
+      "description_en": "Single training run with a few sample_check variants. / Listening sample (listen preset configuration) / with distillation"
     },
     {
       "id": "pop_20251125_best_share_best",
       "title": "20251125_best_share / best",
       "date": "2025-11-25",
-      "description": "Share candidate outputs.",
+      "description": "Share candidate outputs. / 最良出力（推論結果）",
       "items": [
         {
           "label": "元の環境音",
@@ -193,8 +193,8 @@
       ],
       "title_ja": "20251125_best_share / best",
       "title_en": "20251125_best_share / best",
-      "description_ja": "Share candidate outputs.",
-      "description_en": "Share candidate outputs."
+      "description_ja": "Share candidate outputs. / 最良出力（推論結果）",
+      "description_en": "Share candidate outputs. / Best output (inference result)"
     }
   ],
   "date_meta": {

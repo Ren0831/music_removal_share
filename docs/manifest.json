@@ -1,82 +1,70 @@
 {
   "version": 1,
-  "generated_at": "2025-12-23T06:43:26Z",
+  "generated_at": "2025-12-23T06:46:24Z",
   "pages_url": "https://ren0831.github.io/music_removal_share/",
-  "latest_set_id": "pop_20251220_mg_only_sample_check_mg_only_idx_000",
+  "latest_set_id": "pop_20251220_mg_only_output",
   "sets": [
     {
-      "id": "pop_20251220_mg_only_sample_check_mg_only_idx_000",
-      "title": "20251220_mg_only / sample_check_mg_only/idx_000",
+      "id": "pop_20251220_mg_only_output",
+      "title": "20251220_mg_only / output",
       "date": "2025-12-20",
-      "description": "評価用",
+      "description": "出力結果",
       "items": [
         {
           "label": "出力音源",
-          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/sample_check_idx_000.wav",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/output_demo_sched.wav",
           "kind": "output"
         },
         {
           "label": "元の環境音",
-          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/environment.wav",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/environment.wav",
           "kind": "target"
         },
         {
           "label": "混合音源",
-          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/mixture.wav",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/mixture.wav",
           "kind": "mixture"
         },
         {
           "label": "出力音源",
-          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/output.wav",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/output.wav",
           "kind": "output"
         },
         {
           "label": "元の環境音",
-          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/target.wav",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/target.wav",
           "kind": "target"
-        }
-      ],
-      "title_ja": "20251220_mg_only / sample_check_mg_only/idx_000",
-      "title_en": "20251220_mg_only / sample_check_mg_only/idx_000",
-      "description_ja": "評価用",
-      "description_en": "For evaluation"
-    },
-    {
-      "id": "pop_20251220_mg_only_demo",
-      "title": "20251220_mg_only / demo",
-      "date": "2025-12-20",
-      "description": "デモ音源",
-      "items": [
+        },
         {
           "label": "出力音源",
-          "path": "audio/sets/pop_20251220_mg_only_demo/import/output_demo_sched.wav",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/sample_check_idx_000.wav",
           "kind": "output"
         },
         {
           "label": "元の環境音",
-          "path": "audio/sets/pop_20251220_mg_only_demo/import/components/environment.wav",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/environment.wav",
           "kind": "target"
         },
         {
           "label": "混合音源",
-          "path": "audio/sets/pop_20251220_mg_only_demo/import/components/mixture.wav",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/mixture.wav",
           "kind": "mixture"
         },
         {
           "label": "出力音源",
-          "path": "audio/sets/pop_20251220_mg_only_demo/import/components/output.wav",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/output.wav",
           "kind": "output"
         },
         {
           "label": "元の環境音",
-          "path": "audio/sets/pop_20251220_mg_only_demo/import/components/target.wav",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/target.wav",
           "kind": "target"
         }
       ],
-      "title_ja": "20251220_mg_only / demo",
-      "title_en": "20251220_mg_only / demo",
-      "description_ja": "デモ音源",
-      "description_en": "Demo sample"
+      "title_ja": "20251220_mg_only / output",
+      "title_en": "20251220_mg_only / output",
+      "description_ja": "出力結果",
+      "description_en": "Output result"
     },
     {
       "id": "pop_20251215_cmp_msup_quick_report",
@@ -143,36 +131,36 @@
       "description_en": "For comparison"
     },
     {
-      "id": "pop_20251129_listen_distill_listen",
-      "title": "20251129_listen_distill / listen",
+      "id": "pop_20251129_listen_distill_output",
+      "title": "20251129_listen_distill / output",
       "date": "2025-11-29",
-      "description": "視聴用",
+      "description": "出力結果",
       "items": [
         {
           "label": "元の環境音",
-          "path": "audio/sets/pop_20251129_listen_distill_listen/import/components/environment.wav",
+          "path": "audio/sets/pop_20251129_listen_distill_output/import/components/environment.wav",
           "kind": "target"
         },
         {
           "label": "混合音源",
-          "path": "audio/sets/pop_20251129_listen_distill_listen/import/components/mixture.wav",
+          "path": "audio/sets/pop_20251129_listen_distill_output/import/components/mixture.wav",
           "kind": "mixture"
         },
         {
           "label": "出力音源",
-          "path": "audio/sets/pop_20251129_listen_distill_listen/import/components/output.wav",
+          "path": "audio/sets/pop_20251129_listen_distill_output/import/components/output.wav",
           "kind": "output"
         },
         {
           "label": "元の環境音",
-          "path": "audio/sets/pop_20251129_listen_distill_listen/import/components/target.wav",
+          "path": "audio/sets/pop_20251129_listen_distill_output/import/components/target.wav",
           "kind": "target"
         }
       ],
-      "title_ja": "20251129_listen_distill / listen",
-      "title_en": "20251129_listen_distill / listen",
-      "description_ja": "視聴用",
-      "description_en": "For listening"
+      "title_ja": "20251129_listen_distill / output",
+      "title_en": "20251129_listen_distill / output",
+      "description_ja": "出力結果",
+      "description_en": "Output result"
     },
     {
       "id": "pop_20251125_best_share_best",

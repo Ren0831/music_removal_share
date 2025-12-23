@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "generated_at": "2025-12-23T05:04:09Z",
+  "pages_url": "https://ren0831.github.io/music_removal_share/",
+  "latest_set_id": "latest_5samples",
+  "sets": [
+    {
+      "id": "latest_5samples",
+      "title": "Latest (5-sample comparison)",
+      "date": "2025-12-23",
+      "description": "Mixture / Target / Baseline / MetricGAN+ / MetricGAN+ + Distillation",
+      "items": [
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Ground Truth (Environment) / Target (環境音ターゲット)",
+          "path": "audio/target.wav",
+          "kind": "target"
+        },
+        {
+          "label": "Output: Baseline (no MetricGAN+)",
+          "path": "audio/baseline.wav",
+          "kind": "output_baseline"
+        },
+        {
+          "label": "Output: MetricGAN+ best (w=0.20)",
+          "path": "audio/metricgan_w20.wav",
+          "kind": "output_metricgan"
+        },
+        {
+          "label": "Output: MetricGAN+ + Distillation",
+          "path": "audio/distill.wav",
+          "kind": "output_distill"
+        }
+      ]
+    },
+    {
+      "id": "pop_listen_distill_20251129_144323",
+      "title": "Pop listen preset (distill) - 2025-11-29 14:43:23",
+      "date": "2025-11-29",
+      "description": "sample_check_listen (single output file)",
+      "items": [
+        {
+          "label": "Output: sample_check_listen.wav",
+          "path": "audio/Pop/metricgan_plus_distill/20251129_144323/sample_check_listen.wav",
+          "kind": "output"
+        }
+      ]
+    }
+  ]
+}

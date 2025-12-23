@@ -13,15 +13,13 @@
     .panel .label { font-weight: 700; margin-bottom: 6px; }
     .left { min-width: 320px; flex: 1 1 320px; }
     .right { flex: 2 1 520px; }
-    input[type="search"] { width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ddd; }
+    select { width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ddd; }
     .meta { margin-top: 8px; }
     .grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 14px; }
     .card { border: 1px solid #ddd; border-radius: 10px; padding: 14px; }
     .card .label { font-weight: 600; margin-bottom: 6px; }
     audio { width: 100%; margin-top: 8px; }
     .error { color: #b00020; }
-    details { border: 1px solid #f0f0f0; border-radius: 10px; padding: 8px 10px; margin-top: 10px; }
-    summary { cursor: pointer; font-weight: 650; }
     .setList { display: grid; gap: 8px; margin-top: 10px; }
     .setBtn {
       text-align: left; width: 100%;
@@ -39,20 +37,24 @@
 <body>
   <h1>Music Removal - Listening Samples</h1>
   <div class="small">
-    左側で <b>日付 → セット（出力タイミング）</b> を選ぶと、右側に音源が「何の音源か」ラベル付きで出ます。
+    まず <b>日付</b> を選び、次に（その日の）<b>セット</b>を選ぶと、右側に音源が「何の音源か」ラベル付きで出ます。
   </div>
 
   <div class="row">
     <div class="panel left">
       <div class="label">Browse (results風)</div>
-      <input id="search" type="search" placeholder="検索: title / description / id ..." />
+      <div class="small" style="margin-bottom:6px;">日付を選択</div>
+      <select id="dateSelect" aria-label="Choose date"></select>
       <div class="small" style="margin-top:10px;">
         定義: Mixture=入力混合 / Target=環境音GT / Baseline=ベースモデル出力 / MetricGAN+=品質補正あり / Distillation=蒸留あり
       </div>
       <div class="small" style="margin-top:10px;">
         manifest: <a href="manifest.json">manifest.json</a>
       </div>
-      <div id="nav" class="meta"></div>
+      <div class="meta">
+        <div class="label" style="margin-top:10px;">セット（出力タイミング）</div>
+        <div id="setList" class="setList"></div>
+      </div>
       <div id="error" class="error small" style="margin-top:12px;"></div>
     </div>
 
@@ -82,12 +84,25 @@
         (set.description ? `<div>${escapeHtml(set.description)}</div>` : "");
 
       const items = Array.isArray(set.items) ? set.items : [];
+      const kindMap = {
+        "mixture": "Mixture（入力混合）",
+        "target": "Target / Ground Truth（環境音ターゲット）",
+        "output_baseline": "Output（Baseline）",
+        "output_metricgan": "Output（MetricGAN+）",
+        "output_distill": "Output（MetricGAN+ + Distillation）",
+        "extra": "Extra（追加音源）",
+        "import": "Imported（取り込み音源）"
+      };
       $("cards").innerHTML = items.map((it) => {
         const label = escapeHtml(it.label || it.path || "Audio");
         const path = escapeHtml(it.path || "");
+        const kind = escapeHtml(kindMap[it.kind] || (it.kind ? String(it.kind) : ""));
         return `
           <div class="card">
             <div class="label">${label}</div>
+            ${
+              kind ? `<div class="small">${kind}</div>` : ``
+            }
             <audio controls preload="none" src="${path}"></audio>
             <div class="small"><a href="${path}">Open file</a></div>
           </div>
@@ -102,69 +117,17 @@
       return m ? m[0] : "unknown";
     }
 
-    function buildNav(sets, latestSetId, filterText, onSelect) {
-      const q = (filterText || "").trim().toLowerCase();
-      const matches = (s) => {
-        if (!q) return true;
-        const hay = [
-          s.id || "",
-          s.title || "",
-          s.description || "",
-          s.date || ""
-        ].join(" ").toLowerCase();
-        return hay.includes(q);
-      };
-
-      const filtered = sets.filter(matches);
-      const byDate = new Map();
-      for (const s of filtered) {
-        const k = dateKey(s);
-        if (!byDate.has(k)) byDate.set(k, []);
-        byDate.get(k).push(s);
-      }
-
-      // Sort date desc (unknown last)
-      const dates = Array.from(byDate.keys()).sort((a, b) => {
-        if (a === "unknown") return 1;
-        if (b === "unknown") return -1;
-        return a < b ? 1 : (a > b ? -1 : 0);
-      });
-
-      const mkBtn = (s) => {
-        const title = escapeHtml(s.title || s.id);
-        const desc = escapeHtml(s.description || "");
-        const count = Array.isArray(s.items) ? s.items.length : 0;
-        const isLatest = (latestSetId && s.id === latestSetId);
-        return `
-          <button class="setBtn" data-setid="${escapeHtml(s.id)}" type="button">
-            <div class="setTitle">${title}${isLatest ? ' <span class="pill">latest</span>' : ''}</div>
-            <div class="setDesc">${escapeHtml(s.id)} ・ ${count} files${desc ? ' ・ ' + desc : ''}</div>
-          </button>
-        `;
-      };
-
-      const sections = [];
-      for (const d of dates) {
-        const list = byDate.get(d) || [];
-        const openAttr = q ? " open" : "";
-        const header = d === "unknown" ? "unknown date" : d;
-        sections.push(`
-          <details${openAttr}>
-            <summary>${escapeHtml(header)} <span class="pill">${list.length} sets</span></summary>
-            <div class="setList">
-              ${list.map(mkBtn).join("")}
-            </div>
-          </details>
-        `);
-      }
-
-      $("nav").innerHTML = sections.join("");
-      $("nav").querySelectorAll(".setBtn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const id = btn.getAttribute("data-setid");
-          onSelect(id);
-        });
-      });
+    function mkSetButtonHtml(s, latestSetId) {
+      const title = escapeHtml(s.title || s.id);
+      const desc = escapeHtml(s.description || "");
+      const count = Array.isArray(s.items) ? s.items.length : 0;
+      const isLatest = (latestSetId && s.id === latestSetId);
+      return `
+        <button class="setBtn" data-setid="${escapeHtml(s.id)}" type="button">
+          <div class="setTitle">${title}${isLatest ? ' <span class="pill">latest</span>' : ''}</div>
+          <div class="setDesc">${escapeHtml(s.id)} ・ ${count} files${desc ? ' ・ ' + desc : ''}</div>
+        </button>
+      `;
     }
 
     async function main() {
@@ -177,28 +140,64 @@
         if (sets.length === 0) throw new Error("No sets found in manifest");
 
         const byId = new Map(sets.map((s) => [s.id, s]));
-        const initialId = manifest.latest_set_id && byId.has(manifest.latest_set_id)
-          ? manifest.latest_set_id
-          : sets[0].id;
-        let currentId = initialId;
+        const latestSetId = (manifest.latest_set_id && byId.has(manifest.latest_set_id)) ? manifest.latest_set_id : null;
+        const latestDate = latestSetId ? dateKey(byId.get(latestSetId)) : null;
+
+        // Group sets by date
+        const byDate = new Map();
+        for (const s of sets) {
+          const k = dateKey(s);
+          if (!byDate.has(k)) byDate.set(k, []);
+          byDate.get(k).push(s);
+        }
+        const dates = Array.from(byDate.keys()).sort((a, b) => {
+          if (a === "unknown") return 1;
+          if (b === "unknown") return -1;
+          return a < b ? 1 : (a > b ? -1 : 0);
+        });
+
+        // Date select
+        const dateSel = $("dateSelect");
+        dateSel.innerHTML = dates.map((d) => {
+          const label = (latestDate && d === latestDate) ? `${d} (latest)` : d;
+          return `<option value="${escapeHtml(d)}">${escapeHtml(label)}</option>`;
+        }).join("");
+
+        const initialDate = (latestDate && byDate.has(latestDate)) ? latestDate : dates[0];
+        let currentDate = initialDate;
+        let currentSetId = latestSetId;
 
         const selectById = (id) => {
           if (!byId.has(id)) return;
-          currentId = id;
+          currentSetId = id;
           renderSet(byId.get(id));
           document.querySelectorAll(".setBtn").forEach((b) => {
             b.classList.toggle("selected", b.getAttribute("data-setid") === id);
           });
         };
 
-        const rebuild = () => {
-          buildNav(sets, manifest.latest_set_id, $("search").value, (id) => selectById(id));
-          selectById(currentId);
-        };
+        function renderSetListForDate(dateKeyStr) {
+          const list = byDate.get(dateKeyStr) || [];
+          $("setList").innerHTML = list.map((s) => mkSetButtonHtml(s, latestSetId)).join("");
+          $("setList").querySelectorAll(".setBtn").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const id = btn.getAttribute("data-setid");
+              selectById(id);
+            });
+          });
 
-        $("search").addEventListener("input", rebuild);
-        buildNav(sets, manifest.latest_set_id, "", (id) => selectById(id));
-        selectById(initialId);
+          // Auto-select: prefer latest set if it's in this date, else first set.
+          const prefer = (latestSetId && list.some((s) => s.id === latestSetId)) ? latestSetId : (list[0] ? list[0].id : null);
+          if (prefer) selectById(prefer);
+        }
+
+        dateSel.value = initialDate;
+        renderSetListForDate(initialDate);
+
+        dateSel.addEventListener("change", () => {
+          currentDate = dateSel.value;
+          renderSetListForDate(currentDate);
+        });
       } catch (e) {
         $("error").textContent = `Error: ${e && e.message ? e.message : e}`;
       }

@@ -92,25 +92,12 @@
         (set.description ? `<div>${escapeHtml(set.description)}</div>` : "");
 
       const items = Array.isArray(set.items) ? set.items : [];
-      const kindMap = {
-        "mixture": "Mixture（入力混合）",
-        "target": "Target / Ground Truth（環境音ターゲット）",
-        "output_baseline": "Output（Baseline）",
-        "output_metricgan": "Output（MetricGAN+）",
-        "output_distill": "Output（MetricGAN+ + Distillation）",
-        "extra": "Extra（追加音源）",
-        "import": "Imported（取り込み音源）"
-      };
       $("cards").innerHTML = items.map((it) => {
         const label = escapeHtml(it.label || it.path || "Audio");
         const path = escapeHtml(it.path || "");
-        const kind = escapeHtml(kindMap[it.kind] || (it.kind ? String(it.kind) : ""));
         return `
           <div class="card">
             <div class="label">${label}</div>
-            ${
-              kind ? `<div class="small">${kind}</div>` : ``
-            }
             <audio controls preload="none" src="${path}"></audio>
             <div class="small"><a href="${path}">Open file</a></div>
           </div>

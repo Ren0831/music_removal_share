@@ -8,50 +8,70 @@
     body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; margin: 20px; line-height: 1.6; }
     h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
     .small { color: #666; font-size: 0.9rem; }
-    .row { display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap; margin-top: 10px; }
-    .panel { border: 1px solid #eee; border-radius: 10px; padding: 12px; }
+    .row { display: flex; gap: 16px; align-items: stretch; flex-wrap: wrap; margin-top: 10px; }
+    .panel { border: 1px solid #eee; border-radius: 10px; padding: 12px; background: #fff; }
     .panel .label { font-weight: 700; margin-bottom: 6px; }
     .qr img { max-width: 220px; width: 220px; height: auto; display: block; }
-    .controls { min-width: 280px; }
-    select { width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ddd; }
+    .left { min-width: 320px; flex: 1 1 320px; }
+    .right { flex: 2 1 520px; }
+    input[type="search"] { width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ddd; }
     .meta { margin-top: 8px; }
     .grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 14px; }
     .card { border: 1px solid #ddd; border-radius: 10px; padding: 14px; }
     .card .label { font-weight: 600; margin-bottom: 6px; }
     audio { width: 100%; margin-top: 8px; }
     .error { color: #b00020; }
+    details { border: 1px solid #f0f0f0; border-radius: 10px; padding: 8px 10px; margin-top: 10px; }
+    summary { cursor: pointer; font-weight: 650; }
+    .setList { display: grid; gap: 8px; margin-top: 10px; }
+    .setBtn {
+      text-align: left; width: 100%;
+      border: 1px solid #e5e5e5; border-radius: 10px;
+      padding: 10px 10px; background: #fafafa; cursor: pointer;
+    }
+    .setBtn:hover { background: #f4f4f4; }
+    .setBtn.selected { border-color: #2d6cdf; background: #eef4ff; }
+    .setTitle { font-weight: 650; }
+    .setDesc { color: #666; font-size: 0.9rem; margin-top: 2px; }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #f2f2f2; font-size: 0.85rem; margin-left: 6px; }
     @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>
 <body>
   <h1>Music Removal - Listening Samples</h1>
   <div class="small">
-    右のQRからスマホで開けます。左のプルダウンで「いつ出力した音源（セット）」を選び、各音源が何か（Mixture/Target/Outputなど）をラベルで確認しながら再生できます。
+    QRからスマホで開けます。左側で <b>日付 → セット（出力タイミング）</b> を選ぶと、右側に音源が「何の音源か」ラベル付きで出ます。
   </div>
 
   <div class="row">
-    <div class="panel controls">
-      <div class="label">Choose a set (出力タイミング)</div>
-      <select id="setSelect" aria-label="Choose a set"></select>
-      <div id="setMeta" class="meta small"></div>
+    <div class="panel left">
+      <div class="label">Browse (results風)</div>
+      <input id="search" type="search" placeholder="検索: title / description / id ..." />
       <div class="small" style="margin-top:10px;">
-        定義:
-        Mixture=入力混合 / Target=環境音GT / Baseline=ベースモデル出力 / MetricGAN+=品質補正あり / Distillation=蒸留あり
+        定義: Mixture=入力混合 / Target=環境音GT / Baseline=ベースモデル出力 / MetricGAN+=品質補正あり / Distillation=蒸留あり
       </div>
       <div class="small" style="margin-top:10px;">
         manifest: <a href="manifest.json">manifest.json</a>
       </div>
+      <div id="nav" class="meta"></div>
+      <div id="error" class="error small" style="margin-top:12px;"></div>
     </div>
 
-    <div class="panel qr">
-      <div class="label">QR (All Samples)</div>
-      <img src="qr/all_samples.png" alt="QR code to open this page" />
-      <div class="small"><a href="qr/all_samples.png">Open QR image</a></div>
+    <div class="panel right">
+      <div class="row" style="margin-top:0;">
+        <div class="panel qr" style="padding:10px;">
+          <div class="label">QR (All Samples)</div>
+          <img src="qr/all_samples.png" alt="QR code to open this page" />
+          <div class="small"><a href="qr/all_samples.png">Open QR image</a></div>
+        </div>
+        <div style="flex: 1 1 auto; min-width: 220px;">
+          <div class="label">Selected set</div>
+          <div id="setMeta" class="small"></div>
+        </div>
+      </div>
+      <div id="cards" class="grid" aria-live="polite"></div>
     </div>
   </div>
-
-  <div id="error" class="error small" style="margin-top:12px;"></div>
-  <div id="cards" class="grid" aria-live="polite"></div>
 
   <script>
     const $ = (id) => document.getElementById(id);
@@ -85,34 +105,110 @@
       }).join("");
     }
 
+    function dateKey(set) {
+      // Prefer YYYY-MM-DD. Fallback to 'unknown'.
+      const d = (set && set.date) ? String(set.date) : "";
+      const m = d.match(/\d{4}-\d{2}-\d{2}/);
+      return m ? m[0] : "unknown";
+    }
+
+    function buildNav(sets, latestSetId, filterText, onSelect) {
+      const q = (filterText || "").trim().toLowerCase();
+      const matches = (s) => {
+        if (!q) return true;
+        const hay = [
+          s.id || "",
+          s.title || "",
+          s.description || "",
+          s.date || ""
+        ].join(" ").toLowerCase();
+        return hay.includes(q);
+      };
+
+      const filtered = sets.filter(matches);
+      const byDate = new Map();
+      for (const s of filtered) {
+        const k = dateKey(s);
+        if (!byDate.has(k)) byDate.set(k, []);
+        byDate.get(k).push(s);
+      }
+
+      // Sort date desc (unknown last)
+      const dates = Array.from(byDate.keys()).sort((a, b) => {
+        if (a === "unknown") return 1;
+        if (b === "unknown") return -1;
+        return a < b ? 1 : (a > b ? -1 : 0);
+      });
+
+      const mkBtn = (s) => {
+        const title = escapeHtml(s.title || s.id);
+        const desc = escapeHtml(s.description || "");
+        const count = Array.isArray(s.items) ? s.items.length : 0;
+        const isLatest = (latestSetId && s.id === latestSetId);
+        return `
+          <button class="setBtn" data-setid="${escapeHtml(s.id)}" type="button">
+            <div class="setTitle">${title}${isLatest ? ' <span class="pill">latest</span>' : ''}</div>
+            <div class="setDesc">${escapeHtml(s.id)} ・ ${count} files${desc ? ' ・ ' + desc : ''}</div>
+          </button>
+        `;
+      };
+
+      const sections = [];
+      for (const d of dates) {
+        const list = byDate.get(d) || [];
+        const openAttr = q ? " open" : "";
+        const header = d === "unknown" ? "unknown date" : d;
+        sections.push(`
+          <details${openAttr}>
+            <summary>${escapeHtml(header)} <span class="pill">${list.length} sets</span></summary>
+            <div class="setList">
+              ${list.map(mkBtn).join("")}
+            </div>
+          </details>
+        `);
+      }
+
+      $("nav").innerHTML = sections.join("");
+      $("nav").querySelectorAll(".setBtn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-setid");
+          onSelect(id);
+        });
+      });
+    }
+
     async function main() {
       try {
-        const resp = await fetch("manifest.json?v=20251223T050409Z", { cache: "no-store" });
+        const resp = await fetch("manifest.json", { cache: "no-store" });
         if (!resp.ok) throw new Error(`manifest load failed: ${resp.status}`);
         const manifest = await resp.json();
 
         const sets = Array.isArray(manifest.sets) ? manifest.sets : [];
         if (sets.length === 0) throw new Error("No sets found in manifest");
 
-        const sel = $("setSelect");
-        sel.innerHTML = sets.map((s) => {
-          const title = s.title ? `${s.title}` : s.id;
-          const date = s.date ? ` (${s.date})` : "";
-          return `<option value="${escapeHtml(s.id)}">${escapeHtml(title + date)}</option>`;
-        }).join("");
-
         const byId = new Map(sets.map((s) => [s.id, s]));
         const initialId = manifest.latest_set_id && byId.has(manifest.latest_set_id)
           ? manifest.latest_set_id
           : sets[0].id;
+        let currentId = initialId;
 
-        sel.value = initialId;
-        renderSet(byId.get(initialId));
+        const selectById = (id) => {
+          if (!byId.has(id)) return;
+          currentId = id;
+          renderSet(byId.get(id));
+          document.querySelectorAll(".setBtn").forEach((b) => {
+            b.classList.toggle("selected", b.getAttribute("data-setid") === id);
+          });
+        };
 
-        sel.addEventListener("change", () => {
-          const s = byId.get(sel.value);
-          if (s) renderSet(s);
-        });
+        const rebuild = () => {
+          buildNav(sets, manifest.latest_set_id, $("search").value, (id) => selectById(id));
+          selectById(currentId);
+        };
+
+        $("search").addEventListener("input", rebuild);
+        buildNav(sets, manifest.latest_set_id, "", (id) => selectById(id));
+        selectById(initialId);
       } catch (e) {
         $("error").textContent = `Error: ${e && e.message ? e.message : e}`;
       }

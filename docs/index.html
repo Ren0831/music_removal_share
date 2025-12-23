@@ -39,6 +39,9 @@
   <div class="small">
     まず <b>日付</b> を選び、次に（その日の）<b>セット</b>を選ぶと、右側に音源が「何の音源か」ラベル付きで出ます。
   </div>
+  <div class="small" style="margin-top:6px;">
+    最終更新: <span id="updatedAt">loading...</span>
+  </div>
 
   <div class="row">
     <div class="panel left">
@@ -132,9 +135,11 @@
 
     async function main() {
       try {
-        const resp = await fetch("manifest.json", { cache: "no-store" });
+        // Always bypass caches even if index.html is cached on mobile browsers.
+        const resp = await fetch("manifest.json?ts=" + Date.now(), { cache: "no-store" });
         if (!resp.ok) throw new Error(`manifest load failed: ${resp.status}`);
         const manifest = await resp.json();
+        $("updatedAt").textContent = manifest.generated_at || "(unknown)";
 
         const sets = Array.isArray(manifest.sets) ? manifest.sets : [];
         if (sets.length === 0) throw new Error("No sets found in manifest");

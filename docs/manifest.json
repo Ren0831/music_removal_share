@@ -1,9 +1,700 @@
 {
   "version": 1,
-  "generated_at": "2025-12-23T05:04:09Z",
+  "generated_at": "2025-12-23T05:48:52Z",
   "pages_url": "https://ren0831.github.io/music_removal_share/",
-  "latest_set_id": "latest_5samples",
+  "latest_set_id": "pop_20251220_mg_only_sample_check_mg_only_idx_009",
   "sets": [
+    {
+      "id": "pop_20251220_mg_only_sample_check_mg_only_idx_009",
+      "title": "Pop / 20251220_mg_only / sample_check_mg_only/idx_009",
+      "date": "2025-12-20",
+      "description": "- MetricGAN+ ON only (listen preset), 12 epochs.\n- Key outputs:\n- demo: demo_schedule/output_demo_sched.wav\n- batch eval: sample_check_mg_only/summary_metrics.txt\n- logs: logs/train_console.log, logs/eval_console.log, logs/demo_console.log\ntraining: metricgan=true, distill=false, distill_weight=0.5, num_epochs=12, batch_size=2, swa=true",
+      "items": [
+        {
+          "label": "Output (sample_check sample_check_idx_009)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_009/import/sample_check_idx_009.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_009/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_009/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_009/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_009/import/components/output.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Residual (残差)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_009/import/components/residual.wav",
+          "kind": "residual"
+        },
+        {
+          "label": "Target / Ground Truth (環境音ターゲット)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_009/import/components/target.wav",
+          "kind": "target"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251220_mg_only_sample_check_mg_only_idx_008",
+      "title": "Pop / 20251220_mg_only / sample_check_mg_only/idx_008",
+      "date": "2025-12-20",
+      "description": "- MetricGAN+ ON only (listen preset), 12 epochs.\n- Key outputs:\n- demo: demo_schedule/output_demo_sched.wav\n- batch eval: sample_check_mg_only/summary_metrics.txt\n- logs: logs/train_console.log, logs/eval_console.log, logs/demo_console.log\ntraining: metricgan=true, distill=false, distill_weight=0.5, num_epochs=12, batch_size=2, swa=true",
+      "items": [
+        {
+          "label": "Output (sample_check sample_check_idx_008)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_008/import/sample_check_idx_008.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_008/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_008/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_008/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_008/import/components/output.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Residual (残差)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_008/import/components/residual.wav",
+          "kind": "residual"
+        },
+        {
+          "label": "Target / Ground Truth (環境音ターゲット)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_008/import/components/target.wav",
+          "kind": "target"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251220_mg_only_sample_check_mg_only_idx_007",
+      "title": "Pop / 20251220_mg_only / sample_check_mg_only/idx_007",
+      "date": "2025-12-20",
+      "description": "- MetricGAN+ ON only (listen preset), 12 epochs.\n- Key outputs:\n- demo: demo_schedule/output_demo_sched.wav\n- batch eval: sample_check_mg_only/summary_metrics.txt\n- logs: logs/train_console.log, logs/eval_console.log, logs/demo_console.log\ntraining: metricgan=true, distill=false, distill_weight=0.5, num_epochs=12, batch_size=2, swa=true",
+      "items": [
+        {
+          "label": "Output (sample_check sample_check_idx_007)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_007/import/sample_check_idx_007.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_007/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_007/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_007/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_007/import/components/output.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Residual (残差)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_007/import/components/residual.wav",
+          "kind": "residual"
+        },
+        {
+          "label": "Target / Ground Truth (環境音ターゲット)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_007/import/components/target.wav",
+          "kind": "target"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251220_mg_only_sample_check_mg_only_idx_006",
+      "title": "Pop / 20251220_mg_only / sample_check_mg_only/idx_006",
+      "date": "2025-12-20",
+      "description": "- MetricGAN+ ON only (listen preset), 12 epochs.\n- Key outputs:\n- demo: demo_schedule/output_demo_sched.wav\n- batch eval: sample_check_mg_only/summary_metrics.txt\n- logs: logs/train_console.log, logs/eval_console.log, logs/demo_console.log\ntraining: metricgan=true, distill=false, distill_weight=0.5, num_epochs=12, batch_size=2, swa=true",
+      "items": [
+        {
+          "label": "Output (sample_check sample_check_idx_006)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_006/import/sample_check_idx_006.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_006/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_006/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_006/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_006/import/components/output.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Residual (残差)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_006/import/components/residual.wav",
+          "kind": "residual"
+        },
+        {
+          "label": "Target / Ground Truth (環境音ターゲット)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_006/import/components/target.wav",
+          "kind": "target"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251220_mg_only_sample_check_mg_only_idx_005",
+      "title": "Pop / 20251220_mg_only / sample_check_mg_only/idx_005",
+      "date": "2025-12-20",
+      "description": "- MetricGAN+ ON only (listen preset), 12 epochs.\n- Key outputs:\n- demo: demo_schedule/output_demo_sched.wav\n- batch eval: sample_check_mg_only/summary_metrics.txt\n- logs: logs/train_console.log, logs/eval_console.log, logs/demo_console.log\ntraining: metricgan=true, distill=false, distill_weight=0.5, num_epochs=12, batch_size=2, swa=true",
+      "items": [
+        {
+          "label": "Output (sample_check sample_check_idx_005)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_005/import/sample_check_idx_005.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_005/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_005/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_005/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_005/import/components/output.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Residual (残差)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_005/import/components/residual.wav",
+          "kind": "residual"
+        },
+        {
+          "label": "Target / Ground Truth (環境音ターゲット)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_005/import/components/target.wav",
+          "kind": "target"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251220_mg_only_sample_check_mg_only_idx_004",
+      "title": "Pop / 20251220_mg_only / sample_check_mg_only/idx_004",
+      "date": "2025-12-20",
+      "description": "- MetricGAN+ ON only (listen preset), 12 epochs.\n- Key outputs:\n- demo: demo_schedule/output_demo_sched.wav\n- batch eval: sample_check_mg_only/summary_metrics.txt\n- logs: logs/train_console.log, logs/eval_console.log, logs/demo_console.log\ntraining: metricgan=true, distill=false, distill_weight=0.5, num_epochs=12, batch_size=2, swa=true",
+      "items": [
+        {
+          "label": "Output (sample_check sample_check_idx_004)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_004/import/sample_check_idx_004.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_004/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_004/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_004/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_004/import/components/output.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Residual (残差)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_004/import/components/residual.wav",
+          "kind": "residual"
+        },
+        {
+          "label": "Target / Ground Truth (環境音ターゲット)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_004/import/components/target.wav",
+          "kind": "target"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251220_mg_only_sample_check_mg_only_idx_003",
+      "title": "Pop / 20251220_mg_only / sample_check_mg_only/idx_003",
+      "date": "2025-12-20",
+      "description": "- MetricGAN+ ON only (listen preset), 12 epochs.\n- Key outputs:\n- demo: demo_schedule/output_demo_sched.wav\n- batch eval: sample_check_mg_only/summary_metrics.txt\n- logs: logs/train_console.log, logs/eval_console.log, logs/demo_console.log\ntraining: metricgan=true, distill=false, distill_weight=0.5, num_epochs=12, batch_size=2, swa=true",
+      "items": [
+        {
+          "label": "Output (sample_check sample_check_idx_003)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_003/import/sample_check_idx_003.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_003/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_003/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_003/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_003/import/components/output.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Residual (残差)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_003/import/components/residual.wav",
+          "kind": "residual"
+        },
+        {
+          "label": "Target / Ground Truth (環境音ターゲット)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_003/import/components/target.wav",
+          "kind": "target"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251220_mg_only_sample_check_mg_only_idx_002",
+      "title": "Pop / 20251220_mg_only / sample_check_mg_only/idx_002",
+      "date": "2025-12-20",
+      "description": "- MetricGAN+ ON only (listen preset), 12 epochs.\n- Key outputs:\n- demo: demo_schedule/output_demo_sched.wav\n- batch eval: sample_check_mg_only/summary_metrics.txt\n- logs: logs/train_console.log, logs/eval_console.log, logs/demo_console.log\ntraining: metricgan=true, distill=false, distill_weight=0.5, num_epochs=12, batch_size=2, swa=true",
+      "items": [
+        {
+          "label": "Output (sample_check sample_check_idx_002)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_002/import/sample_check_idx_002.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_002/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_002/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_002/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_002/import/components/output.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Residual (残差)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_002/import/components/residual.wav",
+          "kind": "residual"
+        },
+        {
+          "label": "Target / Ground Truth (環境音ターゲット)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_002/import/components/target.wav",
+          "kind": "target"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251220_mg_only_sample_check_mg_only_idx_001",
+      "title": "Pop / 20251220_mg_only / sample_check_mg_only/idx_001",
+      "date": "2025-12-20",
+      "description": "- MetricGAN+ ON only (listen preset), 12 epochs.\n- Key outputs:\n- demo: demo_schedule/output_demo_sched.wav\n- batch eval: sample_check_mg_only/summary_metrics.txt\n- logs: logs/train_console.log, logs/eval_console.log, logs/demo_console.log\ntraining: metricgan=true, distill=false, distill_weight=0.5, num_epochs=12, batch_size=2, swa=true",
+      "items": [
+        {
+          "label": "Output (sample_check sample_check_idx_001)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_001/import/sample_check_idx_001.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_001/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_001/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_001/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_001/import/components/output.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Residual (残差)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_001/import/components/residual.wav",
+          "kind": "residual"
+        },
+        {
+          "label": "Target / Ground Truth (環境音ターゲット)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_001/import/components/target.wav",
+          "kind": "target"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251220_mg_only_sample_check_mg_only_idx_000",
+      "title": "Pop / 20251220_mg_only / sample_check_mg_only/idx_000",
+      "date": "2025-12-20",
+      "description": "- MetricGAN+ ON only (listen preset), 12 epochs.\n- Key outputs:\n- demo: demo_schedule/output_demo_sched.wav\n- batch eval: sample_check_mg_only/summary_metrics.txt\n- logs: logs/train_console.log, logs/eval_console.log, logs/demo_console.log\ntraining: metricgan=true, distill=false, distill_weight=0.5, num_epochs=12, batch_size=2, swa=true",
+      "items": [
+        {
+          "label": "Output (sample_check sample_check_idx_000)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/sample_check_idx_000.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/output.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Residual (残差)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/residual.wav",
+          "kind": "residual"
+        },
+        {
+          "label": "Target / Ground Truth (環境音ターゲット)",
+          "path": "audio/sets/pop_20251220_mg_only_sample_check_mg_only_idx_000/import/components/target.wav",
+          "kind": "target"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251220_mg_only_demo_schedule",
+      "title": "Pop / 20251220_mg_only / demo_schedule",
+      "date": "2025-12-20",
+      "description": "- MetricGAN+ ON only (listen preset), 12 epochs.\n- Key outputs:\n- demo: demo_schedule/output_demo_sched.wav\n- batch eval: sample_check_mg_only/summary_metrics.txt\n- logs: logs/train_console.log, logs/eval_console.log, logs/demo_console.log\ntraining: metricgan=true, distill=false, distill_weight=0.5, num_epochs=12, batch_size=2, swa=true",
+      "items": [
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251220_mg_only_demo_schedule/import/output_demo_sched.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251220_mg_only_demo_schedule/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251220_mg_only_demo_schedule/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/sets/pop_20251220_mg_only_demo_schedule/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251220_mg_only_demo_schedule/import/components/output.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Residual (残差)",
+          "path": "audio/sets/pop_20251220_mg_only_demo_schedule/import/components/residual.wav",
+          "kind": "residual"
+        },
+        {
+          "label": "Target / Ground Truth (環境音ターゲット)",
+          "path": "audio/sets/pop_20251220_mg_only_demo_schedule/import/components/target.wav",
+          "kind": "target"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251215_cmp_msup_quick_report_audio",
+      "title": "Pop / 20251215_cmp_msup_quick / report/audio",
+      "date": "2025-12-15",
+      "description": "- Compare run (MetricGAN off vs on), packaged report exists.\n- Key outputs:\n- report/audio/output_no_metricgan.wav\n- report/audio/output_with_metricgan.wav\n- report/metrics/*summary_metrics.txt",
+      "items": [
+        {
+          "label": "demo_environment.wav",
+          "path": "audio/sets/pop_20251215_cmp_msup_quick_report_audio/import/demo_environment.wav",
+          "kind": "import"
+        },
+        {
+          "label": "demo_mixture.wav",
+          "path": "audio/sets/pop_20251215_cmp_msup_quick_report_audio/import/demo_mixture.wav",
+          "kind": "import"
+        },
+        {
+          "label": "demo_music.wav",
+          "path": "audio/sets/pop_20251215_cmp_msup_quick_report_audio/import/demo_music.wav",
+          "kind": "import"
+        },
+        {
+          "label": "output_no_metricgan.wav",
+          "path": "audio/sets/pop_20251215_cmp_msup_quick_report_audio/import/output_no_metricgan.wav",
+          "kind": "import"
+        },
+        {
+          "label": "output_with_metricgan.wav",
+          "path": "audio/sets/pop_20251215_cmp_msup_quick_report_audio/import/output_with_metricgan.wav",
+          "kind": "import"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251210_cmp_quick_report_audio",
+      "title": "Pop / 20251210_cmp_quick / report/audio",
+      "date": "2025-12-10",
+      "description": "- Older compare run (report-only).",
+      "items": [
+        {
+          "label": "baseline_output.wav",
+          "path": "audio/sets/pop_20251210_cmp_quick_report_audio/import/baseline_output.wav",
+          "kind": "import"
+        },
+        {
+          "label": "demo_environment.wav",
+          "path": "audio/sets/pop_20251210_cmp_quick_report_audio/import/demo_environment.wav",
+          "kind": "import"
+        },
+        {
+          "label": "demo_mixture.wav",
+          "path": "audio/sets/pop_20251210_cmp_quick_report_audio/import/demo_mixture.wav",
+          "kind": "import"
+        },
+        {
+          "label": "demo_music.wav",
+          "path": "audio/sets/pop_20251210_cmp_quick_report_audio/import/demo_music.wav",
+          "kind": "import"
+        },
+        {
+          "label": "improved_output.wav",
+          "path": "audio/sets/pop_20251210_cmp_quick_report_audio/import/improved_output.wav",
+          "kind": "import"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251129_listen_distill_sample_check_listen",
+      "title": "Pop / 20251129_listen_distill / sample_check_listen",
+      "date": "2025-11-29",
+      "description": "- Single training run with a few sample_check variants.\n- Key outputs:\n- sample_check_listen/\n- sample_check_hpss030_tta8_nomask/\n- sample_check_hpss030_maskp18g09_tta0/\n- Logs were moved into logs/ for readability.\ntraining: metricgan=false, distill=true, distill_weight=0.6, num_epochs=12, batch_size=2, swa=true",
+      "items": [
+        {
+          "label": "sample_check_listen.wav",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_listen/import/sample_check_listen.wav",
+          "kind": "import"
+        },
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_listen/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_listen/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_listen/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_listen/import/components/output.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Residual (残差)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_listen/import/components/residual.wav",
+          "kind": "residual"
+        },
+        {
+          "label": "Target / Ground Truth (環境音ターゲット)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_listen/import/components/target.wav",
+          "kind": "target"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251129_listen_distill_sample_check_hpss030_tta8_nomask",
+      "title": "Pop / 20251129_listen_distill / sample_check_hpss030_tta8_nomask",
+      "date": "2025-11-29",
+      "description": "- Single training run with a few sample_check variants.\n- Key outputs:\n- sample_check_listen/\n- sample_check_hpss030_tta8_nomask/\n- sample_check_hpss030_maskp18g09_tta0/\n- Logs were moved into logs/ for readability.\ntraining: metricgan=false, distill=true, distill_weight=0.6, num_epochs=12, batch_size=2, swa=true",
+      "items": [
+        {
+          "label": "sample_check_hpss030_tta8_nomask.wav",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_hpss030_tta8_nomask/import/sample_check_hpss030_tta8_nomask.wav",
+          "kind": "import"
+        },
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_hpss030_tta8_nomask/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_hpss030_tta8_nomask/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_hpss030_tta8_nomask/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_hpss030_tta8_nomask/import/components/output.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Residual (残差)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_hpss030_tta8_nomask/import/components/residual.wav",
+          "kind": "residual"
+        },
+        {
+          "label": "Target / Ground Truth (環境音ターゲット)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_hpss030_tta8_nomask/import/components/target.wav",
+          "kind": "target"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251129_listen_distill_sample_check_hpss030_maskp18g09_tta0",
+      "title": "Pop / 20251129_listen_distill / sample_check_hpss030_maskp18g09_tta0",
+      "date": "2025-11-29",
+      "description": "- Single training run with a few sample_check variants.\n- Key outputs:\n- sample_check_listen/\n- sample_check_hpss030_tta8_nomask/\n- sample_check_hpss030_maskp18g09_tta0/\n- Logs were moved into logs/ for readability.\ntraining: metricgan=false, distill=true, distill_weight=0.6, num_epochs=12, batch_size=2, swa=true",
+      "items": [
+        {
+          "label": "sample_check_hpss030_maskp18g09_tta0.wav",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_hpss030_maskp18g09_tta0/import/sample_check_hpss030_maskp18g09_tta0.wav",
+          "kind": "import"
+        },
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_hpss030_maskp18g09_tta0/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_hpss030_maskp18g09_tta0/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Mixture (入力混合)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_hpss030_maskp18g09_tta0/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_hpss030_maskp18g09_tta0/import/components/output.wav",
+          "kind": "output"
+        },
+        {
+          "label": "Residual (残差)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_hpss030_maskp18g09_tta0/import/components/residual.wav",
+          "kind": "residual"
+        },
+        {
+          "label": "Target / Ground Truth (環境音ターゲット)",
+          "path": "audio/sets/pop_20251129_listen_distill_sample_check_hpss030_maskp18g09_tta0/import/components/target.wav",
+          "kind": "target"
+        }
+      ]
+    },
+    {
+      "id": "pop_20251125_best_share_infer_best",
+      "title": "Pop / 20251125_best_share / infer_best",
+      "date": "2025-11-25",
+      "description": "- Share candidate outputs.\n- Key outputs:\n- infer_best/components/output.wav",
+      "items": [
+        {
+          "label": "Environment (環境音)",
+          "path": "audio/sets/pop_20251125_best_share_infer_best/import/components/environment.wav",
+          "kind": "env"
+        },
+        {
+          "label": "Mix (混合)",
+          "path": "audio/sets/pop_20251125_best_share_infer_best/import/components/mix.wav",
+          "kind": "mix"
+        },
+        {
+          "label": "Output (モデル出力)",
+          "path": "audio/sets/pop_20251125_best_share_infer_best/import/components/output.wav",
+          "kind": "output"
+        }
+      ]
+    },
     {
       "id": "latest_5samples",
       "title": "Latest (5-sample comparison)",
@@ -50,5 +741,27 @@
         }
       ]
     }
-  ]
+  ],
+  "date_meta": {
+    "2025-11-29": {
+      "summary": "- Single training run with a few sample_check variants.\n- Key outputs:\n- sample_check_listen/\n- sample_check_hpss030_tta8_nomask/\n- sample_check_hpss030_maskp18g09_tta0/\n- Logs were moved into logs/ for readability.",
+      "changes_from_prev": "metricgan: (none) -> false\ndistill: (none) -> true\ndistill_weight: (none) -> 0.6\nnum_epochs: (none) -> 12\nbatch_size: (none) -> 2\nswa: (none) -> true"
+    },
+    "2025-12-20": {
+      "changes_from_prev": "metricgan: (none) -> true\ndistill: (none) -> false\ndistill_weight: (none) -> 0.5\nnum_epochs: (none) -> 12\nbatch_size: (none) -> 2\nswa: (none) -> true",
+      "summary": "- MetricGAN+ ON only (listen preset), 12 epochs.\n- Key outputs:\n- demo: demo_schedule/output_demo_sched.wav\n- batch eval: sample_check_mg_only/summary_metrics.txt\n- logs: logs/train_console.log, logs/eval_console.log, logs/demo_console.log"
+    },
+    "2025-11-25": {
+      "summary": "- Share candidate outputs.\n- Key outputs:\n- infer_best/components/output.wav",
+      "changes_from_prev": "(first date)"
+    },
+    "2025-12-10": {
+      "summary": "- Older compare run (report-only).",
+      "changes_from_prev": "metricgan: false -> (none)\ndistill: true -> (none)\ndistill_weight: 0.6 -> (none)\nnum_epochs: 12 -> (none)\nbatch_size: 2 -> (none)\nswa: true -> (none)"
+    },
+    "2025-12-15": {
+      "summary": "- Compare run (MetricGAN off vs on), packaged report exists.\n- Key outputs:\n- report/audio/output_no_metricgan.wav\n- report/audio/output_with_metricgan.wav\n- report/metrics/*summary_metrics.txt",
+      "changes_from_prev": "- Older compare run (report-only). -> - Compare run (MetricGAN off vs on), packaged report exists."
+    }
+  }
 }

@@ -48,6 +48,7 @@
       <div class="label">Browse (results風)</div>
       <div class="small" style="margin-bottom:6px;">日付を選択</div>
       <select id="dateSelect" aria-label="Choose date"></select>
+      <div id="dateMeta" class="small" style="margin-top:10px;"></div>
       <div class="small" style="margin-top:10px;">
         定義: Mixture=入力混合 / Target=環境音GT / Baseline=ベースモデル出力 / MetricGAN+=品質補正あり / Distillation=蒸留あり
       </div>
@@ -78,6 +79,10 @@
         .replaceAll(">", "&gt;")
         .replaceAll("\"", "&quot;")
         .replaceAll("'", "&#039;");
+    }
+
+    function escapeHtmlNl(s) {
+      return escapeHtml(s).replaceAll("\n", "<br>");
     }
 
     function renderSet(set) {
@@ -147,6 +152,7 @@
         const byId = new Map(sets.map((s) => [s.id, s]));
         const latestSetId = (manifest.latest_set_id && byId.has(manifest.latest_set_id)) ? manifest.latest_set_id : null;
         const latestDate = latestSetId ? dateKey(byId.get(latestSetId)) : null;
+        const dateMeta = (manifest.date_meta && typeof manifest.date_meta === "object") ? manifest.date_meta : {};
 
         // Group sets by date
         const byDate = new Map();
@@ -196,11 +202,23 @@
           if (prefer) selectById(prefer);
         }
 
+        function renderDateMeta(dateKeyStr) {
+          const m = dateMeta[dateKeyStr] || {};
+          const summary = m.summary ? String(m.summary) : "";
+          const changes = m.changes_from_prev ? String(m.changes_from_prev) : "";
+          const parts = [];
+          if (summary) parts.push(`<div><b>概要</b>: ${escapeHtmlNl(summary)}</div>`);
+          if (changes) parts.push(`<div><b>前日からの変更</b>: ${escapeHtmlNl(changes)}</div>`);
+          $("dateMeta").innerHTML = parts.join("") || "";
+        }
+
         dateSel.value = initialDate;
+        renderDateMeta(initialDate);
         renderSetListForDate(initialDate);
 
         dateSel.addEventListener("change", () => {
           currentDate = dateSel.value;
+          renderDateMeta(currentDate);
           renderSetListForDate(currentDate);
         });
       } catch (e) {

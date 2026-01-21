@@ -187,30 +187,30 @@
             let hasMetricGAN = false;
             const labelStr = (it.label || "").toLowerCase();
             const pathStr = (it.path || "").toLowerCase();
-            const setId = (selectedSet && selectedSet.id) ? String(selectedSet.id).toLowerCase() : "";
             
             if (kind === "output_with_metricgan" || kind === "output_improved") {
               hasMetricGAN = true;
             } else if (kind === "output_no_metricgan" || kind === "output_baseline") {
               hasMetricGAN = false;
             } else {
-              // Check label, path, or set ID for hints
-              // Positive indicators (MetricGAN+ is used)
+              // Check label and path for hints (don't use set ID as it's too broad)
+              // Positive indicators (MetricGAN+ is used) - must be in path or label
               const positiveIndicators = [
                 "改善あり", "metricgan", "improved", "with_metricgan", 
-                "mg_only", "mg_", "_mg", "distill"
+                "distill", "mg_only"  // mg_only in path, not set ID
               ];
               // Negative indicators (MetricGAN+ is NOT used)
               const negativeIndicators = [
                 "改善なし", "no_metricgan", "baseline", "without_metricgan"
               ];
               
-              const allText = (labelStr + " " + pathStr + " " + setId).toLowerCase();
+              const fileText = (labelStr + " " + pathStr).toLowerCase();
               
               // Check negative indicators first (more specific)
-              const hasNegative = negativeIndicators.some(ind => allText.includes(ind));
-              const hasPositive = positiveIndicators.some(ind => allText.includes(ind));
+              const hasNegative = negativeIndicators.some(ind => fileText.includes(ind));
+              const hasPositive = positiveIndicators.some(ind => fileText.includes(ind));
               
+              // Default to false (no MetricGAN+) if no clear indicator
               hasMetricGAN = hasPositive && !hasNegative;
             }
             

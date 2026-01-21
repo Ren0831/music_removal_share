@@ -112,8 +112,6 @@
     };
 
     let currentLang = localStorage.getItem("lang") || "ja";
-    let sharedMixture = null;
-    let sharedTarget = null;
     let manifestData = null;
 
     // Language selection overlay
@@ -145,55 +143,46 @@
       return m ? m[0] : "unknown";
     }
 
-    function findSharedAudio(sets) {
-      // Find first mixture and target from any set
-      for (const s of sets) {
-        if (!Array.isArray(s.items)) continue;
-        for (const it of s.items) {
-          if (it.kind === "mixture" && !sharedMixture) {
-            sharedMixture = it;
-          }
-          if (it.kind === "target" && !sharedTarget) {
-            sharedTarget = it;
-          }
-          if (sharedMixture && sharedTarget) break;
-        }
-        if (sharedMixture && sharedTarget) break;
+    function getAudioGroupKey(path) {
+      // Group audio by directory (e.g., "components/", "demo_", etc.)
+      // Extract directory or base prefix from path
+      const parts = path.split("/");
+      if (parts.length >= 2) {
+        // Use directory name as group key (e.g., "components", "demo_schedule")
+        const dirName = parts[parts.length - 2];
+        return dirName;
       }
+      // Fallback: use filename prefix (e.g., "demo_mixture" -> "demo")
+      const fileName = parts[parts.length - 1] || "";
+      const match = fileName.match(/^([^_]+)_/);
+      return match ? match[1] : "default";
     }
 
     function renderAudio(selectedSet) {
       const cards = [];
       
-      // Always show shared mixture and target first
-      if (sharedMixture) {
-        const label = escapeHtml(I18N[currentLang].labelsByKind.mixture);
-        cards.push(`
-          <div class="card">
-            <div class="label">${label}</div>
-            <audio controls preload="none" src="${escapeHtml(sharedMixture.path)}"></audio>
-          </div>
-        `);
-      }
-      
-      if (sharedTarget) {
-        const label = escapeHtml(I18N[currentLang].labelsByKind.target);
-        cards.push(`
-          <div class="card">
-            <div class="label">${label}</div>
-            <audio controls preload="none" src="${escapeHtml(sharedTarget.path)}"></audio>
-          </div>
-        `);
+      if (!selectedSet || !Array.isArray(selectedSet.items)) {
+        $("cards").innerHTML = "";
+        return;
       }
 
-      // Show outputs from selected set, separated by MetricGAN+ status
-      const outputsNoMetricGAN = [];
-      const outputsWithMetricGAN = [];
+      // Group items by audio group (same directory or prefix)
+      const groups = new Map();
       
-      if (selectedSet && Array.isArray(selectedSet.items)) {
-        for (const it of selectedSet.items) {
-          const kind = (it && it.kind) ? String(it.kind) : "";
-          if (kind === "output" || kind.startsWith("output_")) {
+      for (const it of selectedSet.items) {
+        const kind = (it && it.kind) ? String(it.kind) : "";
+        if (kind === "mixture" || kind === "target" || kind === "output" || kind.startsWith("output_")) {
+          const groupKey = getAudioGroupKey(it.path || "");
+          if (!groups.has(groupKey)) {
+            groups.set(groupKey, { mixture: null, target: null, outputs: [] });
+          }
+          const group = groups.get(groupKey);
+          
+          if (kind === "mixture") {
+            group.mixture = it;
+          } else if (kind === "target") {
+            group.target = it;
+          } else if (kind === "output" || kind.startsWith("output_")) {
             // Determine if MetricGAN+ is used
             let hasMetricGAN = false;
             const labelStr = (it.label || "").toLowerCase();
@@ -211,40 +200,62 @@
             }
             
             const itemLabel = it.label || I18N[currentLang].labelsByKind[kind] || I18N[currentLang].labelsByKind.output;
-            
-            if (hasMetricGAN) {
-              outputsWithMetricGAN.push({ label: itemLabel, path: it.path });
-            } else {
-              outputsNoMetricGAN.push({ label: itemLabel, path: it.path });
-            }
+            group.outputs.push({ label: itemLabel, path: it.path, hasMetricGAN: hasMetricGAN });
           }
         }
       }
-      
-      // Render outputs: MetricGAN+なし first, then MetricGAN+あり
-      if (outputsNoMetricGAN.length > 0) {
-        const sectionLabel = currentLang === "ja" ? "出力音源（MetricGAN+なし）" : "Output (no MetricGAN+)";
-        cards.push(`<div class="card" style="grid-column: 1 / -1;"><div class="label" style="font-size: 1.1rem; margin-bottom: 12px;">${escapeHtml(sectionLabel)}</div></div>`);
-        for (const it of outputsNoMetricGAN) {
+
+      // Render each group: mixture, target, then outputs (separated by MetricGAN+ status)
+      for (const [groupKey, group] of groups) {
+        // Show mixture and target for this group
+        if (group.mixture) {
+          const label = escapeHtml(I18N[currentLang].labelsByKind.mixture);
           cards.push(`
             <div class="card">
-              <div class="label">${escapeHtml(it.label)}</div>
-              <audio controls preload="none" src="${escapeHtml(it.path)}"></audio>
+              <div class="label">${label}</div>
+              <audio controls preload="none" src="${escapeHtml(group.mixture.path)}"></audio>
             </div>
           `);
         }
-      }
-      
-      if (outputsWithMetricGAN.length > 0) {
-        const sectionLabel = currentLang === "ja" ? "出力音源（MetricGAN+あり）" : "Output (with MetricGAN+)";
-        cards.push(`<div class="card" style="grid-column: 1 / -1;"><div class="label" style="font-size: 1.1rem; margin-bottom: 12px;">${escapeHtml(sectionLabel)}</div></div>`);
-        for (const it of outputsWithMetricGAN) {
+        
+        if (group.target) {
+          const label = escapeHtml(I18N[currentLang].labelsByKind.target);
           cards.push(`
             <div class="card">
-              <div class="label">${escapeHtml(it.label)}</div>
-              <audio controls preload="none" src="${escapeHtml(it.path)}"></audio>
+              <div class="label">${label}</div>
+              <audio controls preload="none" src="${escapeHtml(group.target.path)}"></audio>
             </div>
           `);
+        }
+
+        // Separate outputs by MetricGAN+ status
+        const outputsNoMetricGAN = group.outputs.filter(o => !o.hasMetricGAN);
+        const outputsWithMetricGAN = group.outputs.filter(o => o.hasMetricGAN);
+        
+        if (outputsNoMetricGAN.length > 0) {
+          const sectionLabel = currentLang === "ja" ? "出力音源（MetricGAN+なし）" : "Output (no MetricGAN+)";
+          cards.push(`<div class="card" style="grid-column: 1 / -1;"><div class="label" style="font-size: 1.1rem; margin-bottom: 12px;">${escapeHtml(sectionLabel)}</div></div>`);
+          for (const it of outputsNoMetricGAN) {
+            cards.push(`
+              <div class="card">
+                <div class="label">${escapeHtml(it.label)}</div>
+                <audio controls preload="none" src="${escapeHtml(it.path)}"></audio>
+              </div>
+            `);
+          }
+        }
+        
+        if (outputsWithMetricGAN.length > 0) {
+          const sectionLabel = currentLang === "ja" ? "出力音源（MetricGAN+あり）" : "Output (with MetricGAN+)";
+          cards.push(`<div class="card" style="grid-column: 1 / -1;"><div class="label" style="font-size: 1.1rem; margin-bottom: 12px;">${escapeHtml(sectionLabel)}</div></div>`);
+          for (const it of outputsWithMetricGAN) {
+            cards.push(`
+              <div class="card">
+                <div class="label">${escapeHtml(it.label)}</div>
+                <audio controls preload="none" src="${escapeHtml(it.path)}"></audio>
+              </div>
+            `);
+          }
         }
       }
 
@@ -267,9 +278,6 @@
 
         const sets = Array.isArray(manifestData.sets) ? manifestData.sets : [];
         if (sets.length === 0) throw new Error("No sets found in manifest");
-
-        // Find shared audio
-        findSharedAudio(sets);
 
         const byId = new Map(sets.map((s) => [s.id, s]));
         const latestSetId = (manifestData.latest_set_id && byId.has(manifestData.latest_set_id)) ? manifestData.latest_set_id : null;

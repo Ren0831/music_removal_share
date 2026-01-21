@@ -186,22 +186,65 @@
         `);
       }
 
-      // Show outputs from selected set
+      // Show outputs from selected set, separated by MetricGAN+ status
+      const outputsNoMetricGAN = [];
+      const outputsWithMetricGAN = [];
+      
       if (selectedSet && Array.isArray(selectedSet.items)) {
         for (const it of selectedSet.items) {
           const kind = (it && it.kind) ? String(it.kind) : "";
-          // Show all output types (output, output_no_metricgan, output_with_metricgan, etc.)
           if (kind === "output" || kind.startsWith("output_")) {
-            // Prefer it.label if available, otherwise use labelsByKind
-            let label = it.label || I18N[currentLang].labelsByKind[kind] || I18N[currentLang].labelsByKind.output;
-            label = escapeHtml(label);
-            cards.push(`
-              <div class="card">
-                <div class="label">${label}</div>
-                <audio controls preload="none" src="${escapeHtml(it.path)}"></audio>
-              </div>
-            `);
+            // Determine if MetricGAN+ is used
+            let hasMetricGAN = false;
+            const labelStr = (it.label || "").toLowerCase();
+            const pathStr = (it.path || "").toLowerCase();
+            
+            if (kind === "output_with_metricgan" || kind === "output_improved") {
+              hasMetricGAN = true;
+            } else if (kind === "output_no_metricgan" || kind === "output_baseline") {
+              hasMetricGAN = false;
+            } else {
+              // Check label or path for hints
+              hasMetricGAN = labelStr.includes("改善あり") || labelStr.includes("metricgan") || 
+                            labelStr.includes("improved") || pathStr.includes("with_metricgan") ||
+                            pathStr.includes("metricgan");
+            }
+            
+            const itemLabel = it.label || I18N[currentLang].labelsByKind[kind] || I18N[currentLang].labelsByKind.output;
+            
+            if (hasMetricGAN) {
+              outputsWithMetricGAN.push({ label: itemLabel, path: it.path });
+            } else {
+              outputsNoMetricGAN.push({ label: itemLabel, path: it.path });
+            }
           }
+        }
+      }
+      
+      // Render outputs: MetricGAN+なし first, then MetricGAN+あり
+      if (outputsNoMetricGAN.length > 0) {
+        const sectionLabel = currentLang === "ja" ? "出力音源（MetricGAN+なし）" : "Output (no MetricGAN+)";
+        cards.push(`<div class="card" style="grid-column: 1 / -1;"><div class="label" style="font-size: 1.1rem; margin-bottom: 12px;">${escapeHtml(sectionLabel)}</div></div>`);
+        for (const it of outputsNoMetricGAN) {
+          cards.push(`
+            <div class="card">
+              <div class="label">${escapeHtml(it.label)}</div>
+              <audio controls preload="none" src="${escapeHtml(it.path)}"></audio>
+            </div>
+          `);
+        }
+      }
+      
+      if (outputsWithMetricGAN.length > 0) {
+        const sectionLabel = currentLang === "ja" ? "出力音源（MetricGAN+あり）" : "Output (with MetricGAN+)";
+        cards.push(`<div class="card" style="grid-column: 1 / -1;"><div class="label" style="font-size: 1.1rem; margin-bottom: 12px;">${escapeHtml(sectionLabel)}</div></div>`);
+        for (const it of outputsWithMetricGAN) {
+          cards.push(`
+            <div class="card">
+              <div class="label">${escapeHtml(it.label)}</div>
+              <audio controls preload="none" src="${escapeHtml(it.path)}"></audio>
+            </div>
+          `);
         }
       }
 

@@ -88,7 +88,11 @@
         labelsByKind: {
           mixture: "混合音源",
           target: "元の環境音",
-          output: "出力音源"
+          output: "出力音源",
+          output_no_metricgan: "出力音源（MetricGAN+なし）",
+          output_with_metricgan: "出力音源（MetricGAN+あり）",
+          output_baseline: "出力音源（Baseline）",
+          output_improved: "出力音源（改善版）"
         }
       },
       en: {
@@ -98,7 +102,11 @@
         labelsByKind: {
           mixture: "Mixture",
           target: "Target",
-          output: "Output"
+          output: "Output",
+          output_no_metricgan: "Output (no MetricGAN+)",
+          output_with_metricgan: "Output (with MetricGAN+)",
+          output_baseline: "Output (baseline)",
+          output_improved: "Output (improved)"
         }
       }
     };
@@ -181,8 +189,12 @@
       // Show outputs from selected set
       if (selectedSet && Array.isArray(selectedSet.items)) {
         for (const it of selectedSet.items) {
-          if (it.kind === "output") {
-            const label = escapeHtml(I18N[currentLang].labelsByKind.output);
+          const kind = (it && it.kind) ? String(it.kind) : "";
+          // Show all output types (output, output_no_metricgan, output_with_metricgan, etc.)
+          if (kind === "output" || kind.startsWith("output_")) {
+            // Prefer it.label if available, otherwise use labelsByKind
+            let label = it.label || I18N[currentLang].labelsByKind[kind] || I18N[currentLang].labelsByKind.output;
+            label = escapeHtml(label);
             cards.push(`
               <div class="card">
                 <div class="label">${label}</div>

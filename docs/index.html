@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Music Removal - Listening Samples</title>
+  <title>音楽除去 サンプル音源まとめ</title>
   <style>
     body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; margin: 20px; line-height: 1.6; }
     h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
@@ -14,64 +14,57 @@
     .left { min-width: 320px; flex: 1 1 320px; }
     .right { flex: 2 1 520px; }
     select { width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ddd; }
-    .meta { margin-top: 8px; }
     .grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 14px; }
     .card { border: 1px solid #ddd; border-radius: 10px; padding: 14px; }
     .card .label { font-weight: 600; margin-bottom: 6px; }
     audio { width: 100%; margin-top: 8px; }
     .error { color: #b00020; }
-    .setList { display: grid; gap: 8px; margin-top: 10px; }
-    .setBtn {
-      text-align: left; width: 100%;
-      border: 1px solid #e5e5e5; border-radius: 10px;
-      padding: 10px 10px; background: #fafafa; cursor: pointer;
+    .langOverlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255, 255, 255, 0.95); z-index: 1000;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 20px;
     }
-    .setBtn:hover { background: #f4f4f4; }
-    .setBtn.selected { border-color: #2d6cdf; background: #eef4ff; }
-    .setTitle { font-weight: 650; }
-    .setDesc { color: #666; font-size: 0.9rem; margin-top: 2px; }
-    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #f2f2f2; font-size: 0.85rem; margin-left: 6px; }
+    .langOverlay.hidden { display: none; }
+    .langBtn {
+      padding: 16px 32px; font-size: 1.2rem; border: 2px solid #2d6cdf;
+      border-radius: 8px; background: #fff; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .langBtn:hover { background: #eef4ff; }
+    .mainContent { display: none; }
+    .mainContent.visible { display: block; }
     @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>
 <body>
-  <h1 id="pageTitle">Music Removal - Listening Samples</h1>
-  <div id="pageIntro" class="small"></div>
-  <div class="small" style="margin-top:6px;">
-    <span id="updatedLabel">ページ更新</span>: <span id="updatedAt">loading...</span>
-  </div>
-  <div class="small" style="margin-top:6px;">
-    <label for="langSelect">Language:</label>
-    <select id="langSelect" aria-label="Language">
-      <option value="ja">日本語</option>
-      <option value="en">English</option>
-    </select>
+  <div id="langOverlay" class="langOverlay">
+    <div style="font-size: 1.3rem; margin-bottom: 10px;">言語を選択 / Select Language</div>
+    <button class="langBtn" data-lang="ja">日本語</button>
+    <button class="langBtn" data-lang="en">English</button>
   </div>
 
-  <div class="row">
-    <div class="panel left">
-      <div id="overview" class="small" style="margin-bottom:10px;"></div>
-      <div id="browseTitle" class="label">Browse</div>
-      <div id="pickDateLabel" class="small" style="margin-bottom:6px;">日付を選択</div>
-      <select id="dateSelect" aria-label="Choose date"></select>
-      <div id="dateMeta" class="small" style="margin-top:10px;"></div>
-      <div class="small" style="margin-top:10px;">
-        <span id="defs">定義</span>
-      </div>
-      <div class="small" style="margin-top:10px;">
-        manifest: <a href="manifest.json">manifest.json</a>
-      </div>
-      <div class="meta">
-        <div id="setLabel" class="label" style="margin-top:10px;">セット</div>
-        <div id="setList" class="setList"></div>
-      </div>
-      <div id="error" class="error small" style="margin-top:12px;"></div>
+  <div id="mainContent" class="mainContent">
+    <h1 id="pageTitle">音楽除去 サンプル音源まとめ</h1>
+    <div id="pageIntro" class="small">音楽除去実験で出力した音源が視聴できます。</div>
+    <div class="small" style="margin-top:6px;">
+      <label for="langSelect">Language:</label>
+      <select id="langSelect" aria-label="Language">
+        <option value="ja">日本語</option>
+        <option value="en">English</option>
+      </select>
     </div>
 
-    <div class="panel right">
-      <div id="selectedSetLabel" class="label">Selected</div>
-      <div id="setMeta" class="small"></div>
-      <div id="cards" class="grid" aria-live="polite"></div>
+    <div class="row">
+      <div class="panel left">
+        <div id="pickDateLabel" class="small" style="margin-bottom:6px;">変更内容を選択</div>
+        <select id="dateSelect" aria-label="Choose change"></select>
+        <div id="error" class="error small" style="margin-top:12px;"></div>
+      </div>
+
+      <div class="panel right">
+        <div id="cards" class="grid" aria-live="polite"></div>
+      </div>
     </div>
   </div>
 
@@ -87,136 +80,145 @@
         .replaceAll("'", "&#039;");
     }
 
-    function escapeHtmlNl(s) {
-      return escapeHtml(s).replaceAll("\n", "<br>");
-    }
-
     const I18N = {
       ja: {
-        pageTitle: "Music Removal - 視聴ページ",
-        pageIntro: "まず <b>日付</b> を選び、次に（その日の）<b>セット</b>を選ぶと、右側で音源を視聴できます。",
-        updatedLabel: "ページ更新",
-        overview: "日付 → セットを選ぶと、右側で音源を視聴できます。音源の表示は『混合音源 / 出力音源 / 元の環境音』のように簡潔です。",
-        browseTitle: "一覧（results風）",
-        pickDate: "日付を選択",
-        defs: "定義: 混合音源=入力混合 / 元の環境音=環境音GT / 出力音源=モデル出力",
-        setLabel: "セット（出力タイミング）",
-        selected: "選択中のセット",
-        latestSuffix: "（最新）",
-        latestPill: "最新",
-        metaSummary: "概要",
-        metaChanges: "前回からの変更点",
-        openFile: "ファイルを開く",
+        pageTitle: "音楽除去 サンプル音源まとめ",
+        pageIntro: "音楽除去実験で出力した音源が視聴できます。",
+        pickDate: "変更内容を選択",
         labelsByKind: {
           mixture: "混合音源",
           target: "元の環境音",
-          output: "出力音源",
-          output_no_metricgan: "出力音源（MetricGAN+なし）",
-          output_with_metricgan: "出力音源（MetricGAN+あり）",
-          output_baseline: "出力音源（Baseline）",
-          output_improved: "出力音源（Improved）",
-          unknown: "音源"
+          output: "出力音源"
         }
       },
       en: {
-        pageTitle: "Music Removal - Listening Samples",
-        pageIntro: "Pick a <b>date</b>, then pick a <b>set</b>. The right pane plays the audio.",
-        updatedLabel: "Updated",
-        overview: "Pick a date, then pick a set. The right pane plays the audio with simple labels (Mixture / Output / Target).",
-        browseTitle: "Browse (like results)",
-        pickDate: "Choose a date",
-        defs: "Legend: Mixture=input mix / Target=ground-truth environment / Output=model output",
-        setLabel: "Sets",
-        selected: "Selected set",
-        latestSuffix: " (latest)",
-        latestPill: "latest",
-        metaSummary: "Summary",
-        metaChanges: "What's new vs previous",
-        openFile: "Open file",
+        pageTitle: "Music Removal Sample Audio Collection",
+        pageIntro: "You can listen to audio outputs from music removal experiments.",
+        pickDate: "Select change",
         labelsByKind: {
           mixture: "Mixture",
           target: "Target",
-          output: "Output",
-          output_no_metricgan: "Output (no MetricGAN+)",
-          output_with_metricgan: "Output (with MetricGAN+)",
-          output_baseline: "Output (baseline)",
-          output_improved: "Output (improved)",
-          unknown: "Audio"
+          output: "Output"
         }
       }
     };
 
-    let currentLang = "ja";
+    let currentLang = localStorage.getItem("lang") || "ja";
+    let sharedMixture = null;
+    let sharedTarget = null;
+    let manifestData = null;
 
-    function getLabelForItem(it, idxByKind) {
-      const dict = I18N[currentLang].labelsByKind;
-      const kind = (it && it.kind) ? String(it.kind) : "unknown";
-      const base = dict[kind] || dict.unknown;
-      const n = (idxByKind[kind] || 0) + 1;
-      idxByKind[kind] = n;
-      // If multiple same-kind audios exist, suffix with (1)(2) without filenames.
-      return n > 1 ? `${base} (${n})` : base;
+    // Language selection overlay
+    const langOverlay = $("langOverlay");
+    const mainContent = $("mainContent");
+    
+    if (!localStorage.getItem("lang")) {
+      langOverlay.classList.remove("hidden");
+      mainContent.classList.remove("visible");
+    } else {
+      langOverlay.classList.add("hidden");
+      mainContent.classList.add("visible");
     }
 
-    function renderSet(set) {
-      $("setMeta").innerHTML =
-        `<div><b>${escapeHtml((currentLang === "en" ? (set.title_en || set.title) : (set.title_ja || set.title)) || set.id)}</b></div>` +
-        (set.date ? `<div>${escapeHtml(set.date)}</div>` : "") +
-        ((currentLang === "en" ? (set.description_en || set.description) : (set.description_ja || set.description))
-          ? `<div>${escapeHtml((currentLang === "en" ? (set.description_en || set.description) : (set.description_ja || set.description)))}</div>`
-          : "");
-
-      const items = Array.isArray(set.items) ? set.items : [];
-      const idxByKind = {};
-      $("cards").innerHTML = items.map((it) => {
-        const label = escapeHtml(getLabelForItem(it, idxByKind));
-        const path = escapeHtml(it.path || "");
-        return `
-          <div class="card">
-            <div class="label">${label}</div>
-            <audio controls preload="none" src="${path}"></audio>
-            <div class="small"><a href="${path}">${escapeHtml(I18N[currentLang].openFile)}</a></div>
-          </div>
-        `;
-      }).join("");
-    }
+    document.querySelectorAll(".langBtn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const lang = btn.getAttribute("data-lang");
+        currentLang = lang;
+        localStorage.setItem("lang", lang);
+        langOverlay.classList.add("hidden");
+        mainContent.classList.add("visible");
+        initPage();
+      });
+    });
 
     function dateKey(set) {
-      // Prefer YYYY-MM-DD. Fallback to 'unknown'.
       const d = (set && set.date) ? String(set.date) : "";
       const m = d.match(/\d{4}-\d{2}-\d{2}/);
       return m ? m[0] : "unknown";
     }
 
-    function mkSetButtonHtml(s, latestSetId) {
-      const titleRaw = (currentLang === "en" ? (s.title_en || s.title) : (s.title_ja || s.title)) || s.id;
-      const descRaw = (currentLang === "en" ? (s.description_en || s.description) : (s.description_ja || s.description)) || "";
-      const title = escapeHtml(titleRaw);
-      const desc = escapeHtml(descRaw);
-      const isLatest = (latestSetId && s.id === latestSetId);
-      return `
-        <button class="setBtn" data-setid="${escapeHtml(s.id)}" type="button">
-          <div class="setTitle">${title}${isLatest ? ` <span class="pill">${escapeHtml(I18N[currentLang].latestPill)}</span>` : ''}</div>
-          ${desc ? `<div class="setDesc">${desc}</div>` : ''}
-        </button>
-      `;
+    function findSharedAudio(sets) {
+      // Find first mixture and target from any set
+      for (const s of sets) {
+        if (!Array.isArray(s.items)) continue;
+        for (const it of s.items) {
+          if (it.kind === "mixture" && !sharedMixture) {
+            sharedMixture = it;
+          }
+          if (it.kind === "target" && !sharedTarget) {
+            sharedTarget = it;
+          }
+          if (sharedMixture && sharedTarget) break;
+        }
+        if (sharedMixture && sharedTarget) break;
+      }
     }
 
-    async function main() {
+    function renderAudio(selectedSet) {
+      const cards = [];
+      
+      // Always show shared mixture and target first
+      if (sharedMixture) {
+        const label = escapeHtml(I18N[currentLang].labelsByKind.mixture);
+        cards.push(`
+          <div class="card">
+            <div class="label">${label}</div>
+            <audio controls preload="none" src="${escapeHtml(sharedMixture.path)}"></audio>
+          </div>
+        `);
+      }
+      
+      if (sharedTarget) {
+        const label = escapeHtml(I18N[currentLang].labelsByKind.target);
+        cards.push(`
+          <div class="card">
+            <div class="label">${label}</div>
+            <audio controls preload="none" src="${escapeHtml(sharedTarget.path)}"></audio>
+          </div>
+        `);
+      }
+
+      // Show outputs from selected set
+      if (selectedSet && Array.isArray(selectedSet.items)) {
+        for (const it of selectedSet.items) {
+          if (it.kind === "output") {
+            const label = escapeHtml(I18N[currentLang].labelsByKind.output);
+            cards.push(`
+              <div class="card">
+                <div class="label">${label}</div>
+                <audio controls preload="none" src="${escapeHtml(it.path)}"></audio>
+              </div>
+            `);
+          }
+        }
+      }
+
+      $("cards").innerHTML = cards.join("");
+    }
+
+    function applyLang() {
+      const t = I18N[currentLang];
+      $("pageTitle").textContent = t.pageTitle;
+      $("pageIntro").textContent = t.pageIntro;
+      $("pickDateLabel").textContent = t.pickDate;
+      $("langSelect").value = currentLang;
+    }
+
+    async function initPage() {
       try {
-        // Always bypass caches even if index.html is cached on mobile browsers.
         const resp = await fetch("manifest.json?ts=" + Date.now(), { cache: "no-store" });
         if (!resp.ok) throw new Error(`manifest load failed: ${resp.status}`);
-        const manifest = await resp.json();
-        $("updatedAt").textContent = manifest.generated_at || "(unknown)";
+        manifestData = await resp.json();
 
-        const sets = Array.isArray(manifest.sets) ? manifest.sets : [];
+        const sets = Array.isArray(manifestData.sets) ? manifestData.sets : [];
         if (sets.length === 0) throw new Error("No sets found in manifest");
 
+        // Find shared audio
+        findSharedAudio(sets);
+
         const byId = new Map(sets.map((s) => [s.id, s]));
-        const latestSetId = (manifest.latest_set_id && byId.has(manifest.latest_set_id)) ? manifest.latest_set_id : null;
-        const latestDate = latestSetId ? dateKey(byId.get(latestSetId)) : null;
-        const dateMeta = (manifest.date_meta && typeof manifest.date_meta === "object") ? manifest.date_meta : {};
+        const latestSetId = (manifestData.latest_set_id && byId.has(manifestData.latest_set_id)) ? manifestData.latest_set_id : null;
+        const dateMeta = (manifestData.date_meta && typeof manifestData.date_meta === "object") ? manifestData.date_meta : {};
 
         // Group sets by date
         const byDate = new Map();
@@ -225,113 +227,77 @@
           if (!byDate.has(k)) byDate.set(k, []);
           byDate.get(k).push(s);
         }
-        // Sort: oldest -> newest (newest at bottom)
+        
+        // Sort dates: oldest -> newest
         const dates = Array.from(byDate.keys()).sort((a, b) => {
           if (a === "unknown") return 1;
           if (b === "unknown") return -1;
           return a < b ? -1 : (a > b ? 1 : 0);
         });
 
-        // Date select
+        // Build date select options: summary + date
         const dateSel = $("dateSelect");
+        const latestDate = latestSetId ? dateKey(byId.get(latestSetId)) : null;
+        
         dateSel.innerHTML = dates.map((d) => {
-          const label = (latestDate && d === latestDate) ? `${d}${I18N[currentLang].latestSuffix}` : d;
-          return `<option value="${escapeHtml(d)}">${escapeHtml(label)}</option>`;
+          const m = dateMeta[d] || {};
+          const summary = currentLang === "en"
+            ? (m.summary_en || m.summary || "")
+            : (m.summary_ja || m.summary || "");
+          const label = summary ? `${summary} (${d})` : d;
+          const suffix = (latestDate && d === latestDate) ? " (最新)" : "";
+          return `<option value="${escapeHtml(d)}">${escapeHtml(label + suffix)}</option>`;
         }).join("");
 
         const initialDate = (latestDate && byDate.has(latestDate)) ? latestDate : dates[0];
         let currentDate = initialDate;
-        let currentSetId = latestSetId;
 
-        const selectById = (id) => {
-          if (!byId.has(id)) return;
-          currentSetId = id;
-          renderSet(byId.get(id));
-          document.querySelectorAll(".setBtn").forEach((b) => {
-            b.classList.toggle("selected", b.getAttribute("data-setid") === id);
-          });
-        };
-
-        function renderSetListForDate(dateKeyStr) {
+        function selectDate(dateKeyStr) {
+          currentDate = dateKeyStr;
           const list = byDate.get(dateKeyStr) || [];
-          $("setList").innerHTML = list.map((s) => mkSetButtonHtml(s, latestSetId)).join("");
-          $("setList").querySelectorAll(".setBtn").forEach((btn) => {
-            btn.addEventListener("click", () => {
-              const id = btn.getAttribute("data-setid");
-              selectById(id);
-            });
-          });
-
-          // Auto-select: prefer latest set if it's in this date, else first set.
+          // Prefer latest set if it's in this date, else first set
           const prefer = (latestSetId && list.some((s) => s.id === latestSetId)) ? latestSetId : (list[0] ? list[0].id : null);
-          if (prefer) selectById(prefer);
+          const selectedSet = prefer && byId.has(prefer) ? byId.get(prefer) : null;
+          renderAudio(selectedSet);
         }
 
-        function renderDateMeta(dateKeyStr) {
-          const m = dateMeta[dateKeyStr] || {};
-          const summary = currentLang === "en"
-            ? (m.summary_en || m.summary || "")
-            : (m.summary_ja || m.summary || "");
-          const changes = currentLang === "en"
-            ? (m.changes_en || m.changes_ja || "")
-            : (m.changes_ja || m.changes_en || "");
+        dateSel.value = initialDate;
+        selectDate(initialDate);
 
-          const changesList = Array.isArray(changes)
-            ? changes
-            : (String(changes).trim() ? [String(changes)] : []);
-          const parts = [];
-          if (summary) parts.push(`<div><b>${escapeHtml(I18N[currentLang].metaSummary)}</b>: ${escapeHtmlNl(String(summary))}</div>`);
-          if (changesList.length) {
-            parts.push(`<div style="margin-top:6px;"><b>${escapeHtml(I18N[currentLang].metaChanges)}</b>:</div>`);
-            parts.push(`<div>${changesList.map((x) => `・ ${escapeHtml(String(x))}`).join("<br>")}</div>`);
-          }
-          $("dateMeta").innerHTML = parts.join("") || "";
-        }
+        dateSel.addEventListener("change", () => {
+          selectDate(dateSel.value);
+        });
 
-        function applyLang() {
-          const t = I18N[currentLang];
-          $("pageTitle").textContent = t.pageTitle;
-          $("pageIntro").innerHTML = t.pageIntro;
-          $("updatedLabel").textContent = t.updatedLabel;
-          $("overview").textContent = t.overview;
-          $("browseTitle").textContent = t.browseTitle;
-          $("pickDateLabel").textContent = t.pickDate;
-          $("defs").textContent = t.defs;
-          $("setLabel").textContent = t.setLabel;
-          $("selectedSetLabel").textContent = t.selected;
-        }
-
+        // Language selector
         const langSel = $("langSelect");
         langSel.value = currentLang;
         langSel.addEventListener("change", () => {
           currentLang = langSel.value === "en" ? "en" : "ja";
+          localStorage.setItem("lang", currentLang);
           applyLang();
-          // Re-render date options + meta + set list + selected set
+          // Re-render date options
           dateSel.innerHTML = dates.map((d) => {
-            const label = (latestDate && d === latestDate) ? `${d}${I18N[currentLang].latestSuffix}` : d;
-            return `<option value="${escapeHtml(d)}">${escapeHtml(label)}</option>`;
+            const m = dateMeta[d] || {};
+            const summary = currentLang === "en"
+              ? (m.summary_en || m.summary || "")
+              : (m.summary_ja || m.summary || "");
+            const label = summary ? `${summary} (${d})` : d;
+            const suffix = (latestDate && d === latestDate) ? (currentLang === "en" ? " (latest)" : " (最新)") : "";
+            return `<option value="${escapeHtml(d)}">${escapeHtml(label + suffix)}</option>`;
           }).join("");
           dateSel.value = currentDate;
-          renderDateMeta(currentDate);
-          renderSetListForDate(currentDate);
+          selectDate(currentDate);
         });
 
-        dateSel.value = initialDate;
         applyLang();
-        renderDateMeta(initialDate);
-        renderSetListForDate(initialDate);
-
-        dateSel.addEventListener("change", () => {
-          currentDate = dateSel.value;
-          renderDateMeta(currentDate);
-          renderSetListForDate(currentDate);
-        });
       } catch (e) {
         $("error").textContent = `Error: ${e && e.message ? e.message : e}`;
       }
     }
 
-    main();
+    if (localStorage.getItem("lang")) {
+      initPage();
+    }
   </script>
 </body>
 </html>

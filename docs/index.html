@@ -187,16 +187,31 @@
             let hasMetricGAN = false;
             const labelStr = (it.label || "").toLowerCase();
             const pathStr = (it.path || "").toLowerCase();
+            const setId = (selectedSet && selectedSet.id) ? String(selectedSet.id).toLowerCase() : "";
             
             if (kind === "output_with_metricgan" || kind === "output_improved") {
               hasMetricGAN = true;
             } else if (kind === "output_no_metricgan" || kind === "output_baseline") {
               hasMetricGAN = false;
             } else {
-              // Check label or path for hints
-              hasMetricGAN = labelStr.includes("改善あり") || labelStr.includes("metricgan") || 
-                            labelStr.includes("improved") || pathStr.includes("with_metricgan") ||
-                            pathStr.includes("metricgan");
+              // Check label, path, or set ID for hints
+              // Positive indicators (MetricGAN+ is used)
+              const positiveIndicators = [
+                "改善あり", "metricgan", "improved", "with_metricgan", 
+                "mg_only", "mg_", "_mg", "distill"
+              ];
+              // Negative indicators (MetricGAN+ is NOT used)
+              const negativeIndicators = [
+                "改善なし", "no_metricgan", "baseline", "without_metricgan"
+              ];
+              
+              const allText = (labelStr + " " + pathStr + " " + setId).toLowerCase();
+              
+              // Check negative indicators first (more specific)
+              const hasNegative = negativeIndicators.some(ind => allText.includes(ind));
+              const hasPositive = positiveIndicators.some(ind => allText.includes(ind));
+              
+              hasMetricGAN = hasPositive && !hasNegative;
             }
             
             const itemLabel = it.label || I18N[currentLang].labelsByKind[kind] || I18N[currentLang].labelsByKind.output;

@@ -36,26 +36,6 @@
           "kind": "target"
         },
         {
-          "label": "出力音源",
-          "path": "audio/sets/pop_20251220_mg_only_output/import/sample_check_idx_000.wav",
-          "kind": "output"
-        },
-        {
-          "label": "元の環境音",
-          "path": "audio/sets/pop_20251220_mg_only_output/import/components/environment.wav",
-          "kind": "target"
-        },
-        {
-          "label": "混合音源",
-          "path": "audio/sets/pop_20251220_mg_only_output/import/components/mixture.wav",
-          "kind": "mixture"
-        },
-        {
-          "label": "出力音源",
-          "path": "audio/sets/pop_20251220_mg_only_output/import/components/output.wav",
-          "kind": "output"
-        },
-        {
           "label": "元の環境音",
           "path": "audio/sets/pop_20251220_mg_only_output/import/components/target.wav",
           "kind": "target"

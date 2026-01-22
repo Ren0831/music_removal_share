@@ -327,7 +327,8 @@
           return `<option value="${escapeHtml(d)}">${escapeHtml(label + suffix)}</option>`;
         }).join("");
 
-        const initialDate = (latestDate && byDate.has(latestDate)) ? latestDate : dates[0];
+        // Prefer latestDate if available, otherwise use the newest date (last in sorted array)
+        const initialDate = (latestDate && byDate.has(latestDate)) ? latestDate : (dates.length > 0 ? dates[dates.length - 1] : dates[0]);
         let currentDate = initialDate;
 
         function selectDate(dateKeyStr) {

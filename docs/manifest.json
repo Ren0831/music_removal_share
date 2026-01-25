@@ -1,9 +1,37 @@
 {
   "version": 1,
-  "generated_at": "2025-12-23T06:46:24Z",
+  "generated_at": "2026-01-25T06:55:58Z",
   "pages_url": "https://ren0831.github.io/music_removal_share/",
-  "latest_set_id": "pop_20251220_mg_only_output",
+  "latest_set_id": "pop_results_20260124",
   "sets": [
+    {
+      "id": "pop_results_20260124",
+      "title": "results_20260124",
+      "date": "2026-01-24",
+      "description": "",
+      "items": [
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_results_20260124/import/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_results_20260124/import/mixed.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "出力音源（提案手法）",
+          "path": "audio/sets/pop_results_20260124/import/output_fixed_new.wav",
+          "kind": "output_new"
+        },
+        {
+          "label": "出力音源（従来手法）",
+          "path": "audio/sets/pop_results_20260124/import/output_fixed_old.wav",
+          "kind": "output_old"
+        }
+      ]
+    },
     {
       "id": "pop_20251220_mg_only_output",
       "title": "20251220_mg_only / output",

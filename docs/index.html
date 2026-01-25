@@ -89,6 +89,8 @@
           mixture: "混合音源",
           target: "元の環境音",
           output: "出力音源",
+          output_old: "出力音源（従来手法）",
+          output_new: "出力音源（提案手法）",
           output_no_metricgan: "出力音源（MetricGAN+なし）",
           output_with_metricgan: "出力音源（MetricGAN+あり）",
           output_baseline: "出力音源（Baseline）",
@@ -103,6 +105,8 @@
           mixture: "Mixture",
           target: "Target",
           output: "Output",
+          output_old: "Output (traditional)",
+          output_new: "Output (proposed)",
           output_no_metricgan: "Output (no MetricGAN+)",
           output_with_metricgan: "Output (with MetricGAN+)",
           output_baseline: "Output (baseline)",
@@ -183,39 +187,41 @@
           } else if (kind === "target") {
             group.target = it;
           } else if (kind === "output" || kind.startsWith("output_")) {
-            // Determine if MetricGAN+ is used
-            let hasMetricGAN = false;
+            // Classify outputs for clearer UI.
+            // Priority: old/new (traditional/proposed) > MetricGAN+ classification > generic.
             const labelStr = (it.label || "").toLowerCase();
             const pathStr = (it.path || "").toLowerCase();
-            
-            if (kind === "output_with_metricgan" || kind === "output_improved") {
-              hasMetricGAN = true;
+            const fileText = (labelStr + " " + pathStr).toLowerCase();
+
+            let tag = "other"; // old | new | no_metricgan | with_metricgan | other
+
+            const isOld = (kind === "output_old") || fileText.includes("従来") || fileText.includes("_old") || fileText.includes("old.wav");
+            const isNew = (kind === "output_new") || fileText.includes("提案") || fileText.includes("_new") || fileText.includes("new.wav");
+
+            if (isOld && !isNew) {
+              tag = "old";
+            } else if (isNew && !isOld) {
+              tag = "new";
+            } else if (kind === "output_with_metricgan" || kind === "output_improved") {
+              tag = "with_metricgan";
             } else if (kind === "output_no_metricgan" || kind === "output_baseline") {
-              hasMetricGAN = false;
+              tag = "no_metricgan";
             } else {
-              // Check label and path for hints (don't use set ID as it's too broad)
-              // Positive indicators (MetricGAN+ is used) - must be in path or label
+              // Keyword-based fallback for MetricGAN+ (don't use set ID; it's too broad)
               const positiveIndicators = [
-                "改善あり", "metricgan", "improved", "with_metricgan", 
-                "distill", "mg_only"  // mg_only in path, not set ID
+                "改善あり", "metricgan", "improved", "with_metricgan",
+                "distill", "mg_only"
               ];
-              // Negative indicators (MetricGAN+ is NOT used)
               const negativeIndicators = [
                 "改善なし", "no_metricgan", "baseline", "without_metricgan"
               ];
-              
-              const fileText = (labelStr + " " + pathStr).toLowerCase();
-              
-              // Check negative indicators first (more specific)
               const hasNegative = negativeIndicators.some(ind => fileText.includes(ind));
               const hasPositive = positiveIndicators.some(ind => fileText.includes(ind));
-              
-              // Default to false (no MetricGAN+) if no clear indicator
-              hasMetricGAN = hasPositive && !hasNegative;
+              tag = (hasPositive && !hasNegative) ? "with_metricgan" : "no_metricgan";
             }
-            
+
             const itemLabel = it.label || I18N[currentLang].labelsByKind[kind] || I18N[currentLang].labelsByKind.output;
-            group.outputs.push({ label: itemLabel, path: it.path, hasMetricGAN: hasMetricGAN });
+            group.outputs.push({ label: itemLabel, path: it.path, tag: tag });
           }
         }
       }
@@ -243,14 +249,16 @@
           `);
         }
 
-        // Separate outputs by MetricGAN+ status
-        const outputsNoMetricGAN = group.outputs.filter(o => !o.hasMetricGAN);
-        const outputsWithMetricGAN = group.outputs.filter(o => o.hasMetricGAN);
-        
-        if (outputsNoMetricGAN.length > 0) {
-          const sectionLabel = currentLang === "ja" ? "出力音源（MetricGAN+なし）" : "Output (no MetricGAN+)";
+        const outputsOld = group.outputs.filter(o => o.tag === "old");
+        const outputsNew = group.outputs.filter(o => o.tag === "new");
+        const outputsNoMetricGAN = group.outputs.filter(o => o.tag === "no_metricgan");
+        const outputsWithMetricGAN = group.outputs.filter(o => o.tag === "with_metricgan");
+        const outputsOther = group.outputs.filter(o => o.tag === "other");
+
+        function renderOutputSection(sectionLabel, items) {
+          if (!items || items.length === 0) return;
           cards.push(`<div class="card" style="grid-column: 1 / -1;"><div class="label" style="font-size: 1.1rem; margin-bottom: 12px;">${escapeHtml(sectionLabel)}</div></div>`);
-          for (const it of outputsNoMetricGAN) {
+          for (const it of items) {
             cards.push(`
               <div class="card">
                 <div class="label">${escapeHtml(it.label)}</div>
@@ -259,18 +267,21 @@
             `);
           }
         }
-        
-        if (outputsWithMetricGAN.length > 0) {
-          const sectionLabel = currentLang === "ja" ? "出力音源（MetricGAN+あり）" : "Output (with MetricGAN+)";
-          cards.push(`<div class="card" style="grid-column: 1 / -1;"><div class="label" style="font-size: 1.1rem; margin-bottom: 12px;">${escapeHtml(sectionLabel)}</div></div>`);
-          for (const it of outputsWithMetricGAN) {
-            cards.push(`
-              <div class="card">
-                <div class="label">${escapeHtml(it.label)}</div>
-                <audio controls preload="none" src="${escapeHtml(it.path)}"></audio>
-              </div>
-            `);
-          }
+
+        // Prefer old/new sections when present (results_20260124 style).
+        if (outputsOld.length > 0 || outputsNew.length > 0) {
+          const oldLabel = I18N[currentLang].labelsByKind.output_old || (currentLang === "ja" ? "出力音源（従来手法）" : "Output (traditional)");
+          const newLabel = I18N[currentLang].labelsByKind.output_new || (currentLang === "ja" ? "出力音源（提案手法）" : "Output (proposed)");
+          renderOutputSection(oldLabel, outputsOld);
+          renderOutputSection(newLabel, outputsNew);
+          renderOutputSection(I18N[currentLang].labelsByKind.output, outputsOther);
+        } else if (outputsNoMetricGAN.length > 0 || outputsWithMetricGAN.length > 0) {
+          // Otherwise, use MetricGAN+ grouping when available.
+          renderOutputSection(I18N[currentLang].labelsByKind.output_no_metricgan, outputsNoMetricGAN);
+          renderOutputSection(I18N[currentLang].labelsByKind.output_with_metricgan, outputsWithMetricGAN);
+        } else {
+          // Fallback: just list outputs.
+          renderOutputSection(I18N[currentLang].labelsByKind.output, outputsOther);
         }
       }
 

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-01-25T06:55:58Z",
+  "generated_at": "2026-01-25T07:09:10Z",
   "pages_url": "https://ren0831.github.io/music_removal_share/",
   "latest_set_id": "pop_results_20260124",
   "sets": [
@@ -39,9 +39,9 @@
       "description": "出力結果",
       "items": [
         {
-          "label": "出力音源",
+          "label": "出力音源（MetricGAN+あり）",
           "path": "audio/sets/pop_20251220_mg_only_output/import/output_demo_sched.wav",
-          "kind": "output"
+          "kind": "output_with_metricgan"
         },
         {
           "label": "元の環境音",
@@ -54,14 +54,9 @@
           "kind": "mixture"
         },
         {
-          "label": "出力音源",
+          "label": "出力音源（MetricGAN+なし）",
           "path": "audio/sets/pop_20251220_mg_only_output/import/components/output.wav",
-          "kind": "output"
-        },
-        {
-          "label": "元の環境音",
-          "path": "audio/sets/pop_20251220_mg_only_output/import/components/target.wav",
-          "kind": "target"
+          "kind": "output_no_metricgan"
         },
         {
           "label": "元の環境音",
@@ -91,14 +86,14 @@
           "kind": "mixture"
         },
         {
-          "label": "出力音源（改善なし）",
+          "label": "出力音源（MetricGAN+なし）",
           "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/output_no_metricgan.wav",
-          "kind": "output"
+          "kind": "output_no_metricgan"
         },
         {
-          "label": "出力音源（改善あり）",
+          "label": "出力音源（MetricGAN+あり）",
           "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/output_with_metricgan.wav",
-          "kind": "output"
+          "kind": "output_with_metricgan"
         }
       ],
       "title_ja": "20251215_cmp_msup_quick / report",
@@ -113,9 +108,9 @@
       "description": "比較用",
       "items": [
         {
-          "label": "出力音源（基本）",
+          "label": "出力音源（Baseline）",
           "path": "audio/sets/pop_20251210_cmp_quick_report/import/baseline_output.wav",
-          "kind": "output"
+          "kind": "output_baseline"
         },
         {
           "label": "元の環境音",
@@ -130,7 +125,7 @@
         {
           "label": "出力音源（改善版）",
           "path": "audio/sets/pop_20251210_cmp_quick_report/import/improved_output.wav",
-          "kind": "output"
+          "kind": "output_improved"
         }
       ],
       "title_ja": "20251210_cmp_quick / report",
@@ -155,9 +150,9 @@
           "kind": "mixture"
         },
         {
-          "label": "出力音源",
+          "label": "出力音源（MetricGAN+なし）",
           "path": "audio/sets/pop_20251129_listen_distill_output/import/components/output.wav",
-          "kind": "output"
+          "kind": "output_no_metricgan"
         },
         {
           "label": "元の環境音",
@@ -182,9 +177,9 @@
           "kind": "target"
         },
         {
-          "label": "出力音源",
+          "label": "出力音源（MetricGAN+なし）",
           "path": "audio/sets/pop_20251125_best_share_best/import/components/output.wav",
-          "kind": "output"
+          "kind": "output_no_metricgan"
         }
       ],
       "title_ja": "20251125_best_share / best",

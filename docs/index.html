@@ -147,142 +147,128 @@
       return m ? m[0] : "unknown";
     }
 
-    function getAudioGroupKey(path) {
-      // Group audio by directory (e.g., "components/", "demo_", etc.)
-      // Extract directory or base prefix from path
-      const parts = path.split("/");
-      if (parts.length >= 2) {
-        // Use directory name as group key (e.g., "components", "demo_schedule")
-        const dirName = parts[parts.length - 2];
-        return dirName;
-      }
-      // Fallback: use filename prefix (e.g., "demo_mixture" -> "demo")
-      const fileName = parts[parts.length - 1] || "";
-      const match = fileName.match(/^([^_]+)_/);
-      return match ? match[1] : "default";
+    let sharedBase = { mixture: null, target: null };
+
+    function findFirstKind(items, kind) {
+      if (!Array.isArray(items)) return null;
+      return items.find((it) => it && String(it.kind || "") === kind) || null;
     }
 
     function renderAudio(selectedSet) {
       const cards = [];
-      
+
       if (!selectedSet || !Array.isArray(selectedSet.items)) {
         $("cards").innerHTML = "";
         return;
       }
 
-      // Group items by audio group (same directory or prefix)
-      const groups = new Map();
-      
-      for (const it of selectedSet.items) {
-        const kind = (it && it.kind) ? String(it.kind) : "";
-        if (kind === "mixture" || kind === "target" || kind === "output" || kind.startsWith("output_")) {
-          const groupKey = getAudioGroupKey(it.path || "");
-          if (!groups.has(groupKey)) {
-            groups.set(groupKey, { mixture: null, target: null, outputs: [] });
-          }
-          const group = groups.get(groupKey);
-          
-          if (kind === "mixture") {
-            group.mixture = it;
-          } else if (kind === "target") {
-            group.target = it;
-          } else if (kind === "output" || kind.startsWith("output_")) {
-            // Classify outputs for clearer UI.
-            // Priority: old/new (traditional/proposed) > MetricGAN+ classification > generic.
-            const labelStr = (it.label || "").toLowerCase();
-            const pathStr = (it.path || "").toLowerCase();
-            const fileText = (labelStr + " " + pathStr).toLowerCase();
+      const baseMixture = sharedBase.mixture || findFirstKind(selectedSet.items, "mixture");
+      const baseTarget = sharedBase.target || findFirstKind(selectedSet.items, "target");
 
-            let tag = "other"; // old | new | no_metricgan | with_metricgan | other
+      function renderSingleCard(labelText, path) {
+        if (!path) return;
+        cards.push(`
+          <div class="card">
+            <div class="label">${escapeHtml(labelText)}</div>
+            <audio controls preload="none" src="${escapeHtml(path)}"></audio>
+          </div>
+        `);
+      }
 
-            const isOld = (kind === "output_old") || fileText.includes("従来") || fileText.includes("_old") || fileText.includes("old.wav");
-            const isNew = (kind === "output_new") || fileText.includes("提案") || fileText.includes("_new") || fileText.includes("new.wav");
+      // Base (shared across selections): mixture + target
+      if (baseMixture && baseMixture.path) {
+        renderSingleCard(I18N[currentLang].labelsByKind.mixture, baseMixture.path);
+      }
+      if (baseTarget && baseTarget.path) {
+        renderSingleCard(I18N[currentLang].labelsByKind.target, baseTarget.path);
+      }
 
-            if (isOld && !isNew) {
-              tag = "old";
-            } else if (isNew && !isOld) {
-              tag = "new";
-            } else if (kind === "output_with_metricgan" || kind === "output_improved") {
-              tag = "with_metricgan";
-            } else if (kind === "output_no_metricgan" || kind === "output_baseline") {
-              tag = "no_metricgan";
-            } else {
-              // Keyword-based fallback for MetricGAN+ (don't use set ID; it's too broad)
-              const positiveIndicators = [
-                "改善あり", "metricgan", "improved", "with_metricgan",
-                "distill", "mg_only"
-              ];
-              const negativeIndicators = [
-                "改善なし", "no_metricgan", "baseline", "without_metricgan"
-              ];
-              const hasNegative = negativeIndicators.some(ind => fileText.includes(ind));
-              const hasPositive = positiveIndicators.some(ind => fileText.includes(ind));
-              tag = (hasPositive && !hasNegative) ? "with_metricgan" : "no_metricgan";
-            }
+      // Outputs only (the part that changes with the selection)
+      const outputItems = selectedSet.items.filter((it) => {
+        const k = (it && it.kind) ? String(it.kind) : "";
+        return k === "output" || k.startsWith("output_");
+      });
 
-            const itemLabel = it.label || I18N[currentLang].labelsByKind[kind] || I18N[currentLang].labelsByKind.output;
-            group.outputs.push({ label: itemLabel, path: it.path, tag: tag });
-          }
+      // Classify each output by method + MetricGAN usage.
+      // method: old | new | other
+      // mg: with_metricgan | no_metricgan | other
+      const classified = outputItems.map((it) => {
+        const kind = String(it.kind || "");
+        const labelStr = String(it.label || "");
+        const pathStr = String(it.path || "");
+        const fileText = (labelStr + " " + pathStr).toLowerCase();
+
+        let method = "other";
+        if (kind === "output_old" || fileText.includes("従来") || fileText.includes("_old") || fileText.includes("old.wav")) method = "old";
+        if (kind === "output_new" || fileText.includes("提案") || fileText.includes("_new") || fileText.includes("new.wav")) method = "new";
+
+        let mg = "other";
+        if (kind === "output_with_metricgan" || kind === "output_improved") mg = "with_metricgan";
+        else if (kind === "output_no_metricgan" || kind === "output_baseline") mg = "no_metricgan";
+
+        const itemLabel = it.label || I18N[currentLang].labelsByKind[kind] || I18N[currentLang].labelsByKind.output;
+        return { label: itemLabel, path: it.path, method, mg };
+      });
+
+      function renderSectionTitle(title) {
+        cards.push(`<div class="card" style="grid-column: 1 / -1;"><div class="label" style="font-size: 1.1rem; margin-bottom: 2px;">${escapeHtml(title)}</div></div>`);
+      }
+
+      function renderOutputList(items) {
+        for (const it of items) {
+          renderSingleCard(it.label, it.path);
         }
       }
 
-      // Render each group: mixture, target, then outputs (separated by MetricGAN+ status)
-      for (const [groupKey, group] of groups) {
-        // Show mixture and target for this group
-        if (group.mixture) {
-          const label = escapeHtml(I18N[currentLang].labelsByKind.mixture);
-          cards.push(`
-            <div class="card">
-              <div class="label">${label}</div>
-              <audio controls preload="none" src="${escapeHtml(group.mixture.path)}"></audio>
-            </div>
-          `);
-        }
-        
-        if (group.target) {
-          const label = escapeHtml(I18N[currentLang].labelsByKind.target);
-          cards.push(`
-            <div class="card">
-              <div class="label">${label}</div>
-              <audio controls preload="none" src="${escapeHtml(group.target.path)}"></audio>
-            </div>
-          `);
-        }
+      function renderMethodBlock(methodKey, items) {
+        if (!items || items.length === 0) return;
+        const title =
+          methodKey === "old" ? (I18N[currentLang].labelsByKind.output_old || (currentLang === "ja" ? "出力音源（従来手法）" : "Output (traditional)")) :
+          methodKey === "new" ? (I18N[currentLang].labelsByKind.output_new || (currentLang === "ja" ? "出力音源（提案手法）" : "Output (proposed)")) :
+          I18N[currentLang].labelsByKind.output;
 
-        const outputsOld = group.outputs.filter(o => o.tag === "old");
-        const outputsNew = group.outputs.filter(o => o.tag === "new");
-        const outputsNoMetricGAN = group.outputs.filter(o => o.tag === "no_metricgan");
-        const outputsWithMetricGAN = group.outputs.filter(o => o.tag === "with_metricgan");
-        const outputsOther = group.outputs.filter(o => o.tag === "other");
+        renderSectionTitle(title);
+        const noMG = items.filter((x) => x.mg === "no_metricgan");
+        const withMG = items.filter((x) => x.mg === "with_metricgan");
+        const other = items.filter((x) => x.mg === "other");
 
-        function renderOutputSection(sectionLabel, items) {
-          if (!items || items.length === 0) return;
-          cards.push(`<div class="card" style="grid-column: 1 / -1;"><div class="label" style="font-size: 1.1rem; margin-bottom: 12px;">${escapeHtml(sectionLabel)}</div></div>`);
-          for (const it of items) {
-            cards.push(`
-              <div class="card">
-                <div class="label">${escapeHtml(it.label)}</div>
-                <audio controls preload="none" src="${escapeHtml(it.path)}"></audio>
-              </div>
-            `);
+        if (noMG.length > 0 || withMG.length > 0) {
+          if (noMG.length > 0) {
+            renderSectionTitle(I18N[currentLang].labelsByKind.output_no_metricgan);
+            renderOutputList(noMG);
           }
-        }
-
-        // Prefer old/new sections when present (results_20260124 style).
-        if (outputsOld.length > 0 || outputsNew.length > 0) {
-          const oldLabel = I18N[currentLang].labelsByKind.output_old || (currentLang === "ja" ? "出力音源（従来手法）" : "Output (traditional)");
-          const newLabel = I18N[currentLang].labelsByKind.output_new || (currentLang === "ja" ? "出力音源（提案手法）" : "Output (proposed)");
-          renderOutputSection(oldLabel, outputsOld);
-          renderOutputSection(newLabel, outputsNew);
-          renderOutputSection(I18N[currentLang].labelsByKind.output, outputsOther);
-        } else if (outputsNoMetricGAN.length > 0 || outputsWithMetricGAN.length > 0) {
-          // Otherwise, use MetricGAN+ grouping when available.
-          renderOutputSection(I18N[currentLang].labelsByKind.output_no_metricgan, outputsNoMetricGAN);
-          renderOutputSection(I18N[currentLang].labelsByKind.output_with_metricgan, outputsWithMetricGAN);
+          if (withMG.length > 0) {
+            renderSectionTitle(I18N[currentLang].labelsByKind.output_with_metricgan);
+            renderOutputList(withMG);
+          }
+          renderOutputList(other);
         } else {
-          // Fallback: just list outputs.
-          renderOutputSection(I18N[currentLang].labelsByKind.output, outputsOther);
+          renderOutputList(items);
         }
+      }
+
+      const hasMethod = classified.some((x) => x.method === "old" || x.method === "new");
+      if (hasMethod) {
+        renderMethodBlock("old", classified.filter((x) => x.method === "old"));
+        renderMethodBlock("new", classified.filter((x) => x.method === "new"));
+        renderMethodBlock("other", classified.filter((x) => x.method === "other"));
+      } else {
+        const noMG = classified.filter((x) => x.mg === "no_metricgan");
+        const withMG = classified.filter((x) => x.mg === "with_metricgan");
+        const other = classified.filter((x) => x.mg === "other");
+
+        if (noMG.length > 0) {
+          renderSectionTitle(I18N[currentLang].labelsByKind.output_no_metricgan);
+          renderOutputList(noMG);
+        }
+        if (withMG.length > 0) {
+          renderSectionTitle(I18N[currentLang].labelsByKind.output_with_metricgan);
+          renderOutputList(withMG);
+        }
+        if (other.length > 0 && (noMG.length > 0 || withMG.length > 0)) {
+          renderSectionTitle(I18N[currentLang].labelsByKind.output);
+        }
+        renderOutputList(other);
       }
 
       $("cards").innerHTML = cards.join("");
@@ -304,6 +290,19 @@
 
         const sets = Array.isArray(manifestData.sets) ? manifestData.sets : [];
         if (sets.length === 0) throw new Error("No sets found in manifest");
+
+        // Determine shared base audio (mixture/target). These stay fixed; only outputs change.
+        sharedBase = { mixture: null, target: null };
+        for (const s of sets) {
+          if (!s || !Array.isArray(s.items)) continue;
+          const mix = s.items.find((it) => it && String(it.kind || "") === "mixture") || null;
+          const tgt = s.items.find((it) => it && String(it.kind || "") === "target") || null;
+          if (mix && tgt) {
+            sharedBase.mixture = mix;
+            sharedBase.target = tgt;
+            break;
+          }
+        }
 
         const byId = new Map(sets.map((s) => [s.id, s]));
         const latestSetId = (manifestData.latest_set_id && byId.has(manifestData.latest_set_id)) ? manifestData.latest_set_id : null;

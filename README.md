@@ -29,7 +29,7 @@ This regenerates:
 ## Push
 
 ```bash
-cd share_publish/music_removal_share
+cd share/music_removal_share
 git status
 git add -A
 git commit -m "Update listening samples + QR"

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-01-25T07:09:10Z",
+  "generated_at": "2026-01-28T05:00:38Z",
   "pages_url": "https://ren0831.github.io/music_removal_share/",
   "latest_set_id": "pop_results_20260124",
   "sets": [
@@ -190,23 +190,23 @@
   ],
   "date_meta": {
     "2025-11-29": {
-      "summary_ja": "品質改善を試した",
-      "summary_en": "Tried quality improvement",
+      "summary_ja": "品質改善",
+      "summary_en": "Quality improvement",
       "changes_ja": [
-        "品質改善の結果を追加"
+        "品質改善の比較を追加"
       ],
       "changes_en": [
-        "Added quality improvement result"
+        "Added a quality comparison"
       ]
     },
     "2025-12-20": {
-      "summary_ja": "最新の結果",
-      "summary_en": "Latest result",
+      "summary_ja": "MetricGAN+比較",
+      "summary_en": "MetricGAN+ comparison",
       "changes_ja": [
-        "最新の結果を追加"
+        "MetricGAN+あり/なしの比較を追加"
       ],
       "changes_en": [
-        "Added latest result"
+        "Added with/without MetricGAN+ comparison"
       ]
     },
     "2025-11-25": {
@@ -220,8 +220,8 @@
       ]
     },
     "2025-12-10": {
-      "summary_ja": "比較実験",
-      "summary_en": "Comparison experiment",
+      "summary_ja": "比較（条件A）",
+      "summary_en": "Comparison (A)",
       "changes_ja": [
         "比較結果を追加"
       ],
@@ -230,13 +230,23 @@
       ]
     },
     "2025-12-15": {
-      "summary_ja": "比較実験",
-      "summary_en": "Comparison experiment",
+      "summary_ja": "比較（条件B）",
+      "summary_en": "Comparison (B)",
       "changes_ja": [
         "別の比較結果を追加"
       ],
       "changes_en": [
         "Added another comparison result"
+      ]
+    },
+    "2026-01-24": {
+      "summary_ja": "従来/提案 比較",
+      "summary_en": "Traditional vs proposed",
+      "changes_ja": [
+        "従来手法と提案手法の比較を追加"
+      ],
+      "changes_en": [
+        "Added traditional vs proposed comparison"
       ]
     }
   }

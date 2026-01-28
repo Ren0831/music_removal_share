@@ -333,7 +333,9 @@
             ? (m.summary_en || m.summary || "")
             : (m.summary_ja || m.summary || "");
           const label = summary ? `${summary} (${d})` : d;
-          const suffix = (latestDate && d === latestDate) ? " (最新)" : "";
+          const suffix = (latestDate && d === latestDate)
+            ? (currentLang === "en" ? " (latest)" : " (最新)")
+            : "";
           return `<option value="${escapeHtml(d)}">${escapeHtml(label + suffix)}</option>`;
         }).join("");
 

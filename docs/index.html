@@ -206,7 +206,18 @@
         if (kind === "output_with_metricgan" || kind === "output_improved") mg = "with_metricgan";
         else if (kind === "output_no_metricgan" || kind === "output_baseline") mg = "no_metricgan";
 
-        const itemLabel = it.label || I18N[currentLang].labelsByKind[kind] || I18N[currentLang].labelsByKind.output;
+        // In English mode, never show Japanese labels from manifest.
+        // Prefer kind-based labels; fallback to filename.
+        let itemLabel = "";
+        if (currentLang === "en") {
+          itemLabel = I18N[currentLang].labelsByKind[kind] || I18N[currentLang].labelsByKind.output;
+          if (!itemLabel) {
+            const fn = (pathStr.split("/").pop() || "").trim();
+            itemLabel = fn ? ("Audio (" + fn + ")") : "Audio";
+          }
+        } else {
+          itemLabel = it.label || I18N[currentLang].labelsByKind[kind] || I18N[currentLang].labelsByKind.output;
+        }
         return { label: itemLabel, path: it.path, method, mg };
       });
 

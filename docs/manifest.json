@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-01-28T05:06:32Z",
+  "generated_at": "2026-02-03T04:46:18Z",
   "pages_url": "https://ren0831.github.io/music_removal_share/",
   "latest_set_id": "pop_results_20260124",
   "sets": [
@@ -102,38 +102,6 @@
       "description_en": "For comparison"
     },
     {
-      "id": "pop_20251210_cmp_quick_report",
-      "title": "20251210_cmp_quick / report",
-      "date": "2025-12-10",
-      "description": "比較用",
-      "items": [
-        {
-          "label": "出力音源（Baseline）",
-          "path": "audio/sets/pop_20251210_cmp_quick_report/import/baseline_output.wav",
-          "kind": "output_baseline"
-        },
-        {
-          "label": "元の環境音",
-          "path": "audio/sets/pop_20251210_cmp_quick_report/import/demo_environment.wav",
-          "kind": "target"
-        },
-        {
-          "label": "混合音源",
-          "path": "audio/sets/pop_20251210_cmp_quick_report/import/demo_mixture.wav",
-          "kind": "mixture"
-        },
-        {
-          "label": "出力音源（改善版）",
-          "path": "audio/sets/pop_20251210_cmp_quick_report/import/improved_output.wav",
-          "kind": "output_improved"
-        }
-      ],
-      "title_ja": "20251210_cmp_quick / report",
-      "title_en": "20251210_cmp_quick / report",
-      "description_ja": "比較用",
-      "description_en": "For comparison"
-    },
-    {
       "id": "pop_20251129_listen_distill_output",
       "title": "20251129_listen_distill / output",
       "date": "2025-11-29",
@@ -217,16 +185,6 @@
       ],
       "changes_en": [
         "First entry"
-      ]
-    },
-    "2025-12-10": {
-      "summary_ja": "旧比較（レポートのみ）",
-      "summary_en": "Older comparison (report only)",
-      "changes_ja": [
-        "比較結果を追加"
-      ],
-      "changes_en": [
-        "Added comparison result"
       ]
     },
     "2025-12-15": {

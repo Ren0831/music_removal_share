@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-02-03T04:59:24Z",
+  "generated_at": "2026-02-03T05:18:52Z",
   "pages_url": "https://ren0831.github.io/music_removal_share/",
   "latest_set_id": "pop_results_20260124",
   "sets": [
@@ -65,38 +65,6 @@
       "description_en": "For comparison"
     },
     {
-      "id": "pop_20251129_listen_distill_output",
-      "title": "20251129_listen_distill / output",
-      "date": "2025-11-29",
-      "description": "出力結果",
-      "items": [
-        {
-          "label": "元の環境音",
-          "path": "audio/sets/pop_20251129_listen_distill_output/import/components/environment.wav",
-          "kind": "target"
-        },
-        {
-          "label": "混合音源",
-          "path": "audio/sets/pop_20251129_listen_distill_output/import/components/mixture.wav",
-          "kind": "mixture"
-        },
-        {
-          "label": "出力音源（MetricGAN+なし）",
-          "path": "audio/sets/pop_20251129_listen_distill_output/import/components/output.wav",
-          "kind": "output_no_metricgan"
-        },
-        {
-          "label": "元の環境音",
-          "path": "audio/sets/pop_20251129_listen_distill_output/import/components/target.wav",
-          "kind": "target"
-        }
-      ],
-      "title_ja": "20251129_listen_distill / output",
-      "title_en": "20251129_listen_distill / output",
-      "description_ja": "出力結果",
-      "description_en": "Output result"
-    },
-    {
       "id": "pop_20251125_best_share_best",
       "title": "20251125_best_share / best",
       "date": "2025-11-25",
@@ -120,16 +88,6 @@
     }
   ],
   "date_meta": {
-    "2025-11-29": {
-      "summary_ja": "品質改善",
-      "summary_en": "Quality improvement",
-      "changes_ja": [
-        "品質改善の比較を追加"
-      ],
-      "changes_en": [
-        "Added a quality comparison"
-      ]
-    },
     "2025-11-25": {
       "summary_ja": "初回",
       "summary_en": "First entry",
@@ -141,8 +99,8 @@
       ]
     },
     "2025-12-15": {
-      "summary_ja": "MetricGAN+比較（レポート）",
-      "summary_en": "MetricGAN+ comparison (report)",
+      "summary_ja": "MetricGAN+比較",
+      "summary_en": "MetricGAN+ comparison",
       "changes_ja": [
         "MetricGAN+あり/なしの比較を追加"
       ],

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-02-03T04:46:18Z",
+  "generated_at": "2026-02-03T04:59:24Z",
   "pages_url": "https://ren0831.github.io/music_removal_share/",
   "latest_set_id": "pop_results_20260124",
   "sets": [
@@ -31,43 +31,6 @@
           "kind": "output_old"
         }
       ]
-    },
-    {
-      "id": "pop_20251220_mg_only_output",
-      "title": "20251220_mg_only / output",
-      "date": "2025-12-20",
-      "description": "出力結果",
-      "items": [
-        {
-          "label": "出力音源（MetricGAN+あり）",
-          "path": "audio/sets/pop_20251220_mg_only_output/import/output_demo_sched.wav",
-          "kind": "output_with_metricgan"
-        },
-        {
-          "label": "元の環境音",
-          "path": "audio/sets/pop_20251220_mg_only_output/import/components/environment.wav",
-          "kind": "target"
-        },
-        {
-          "label": "混合音源",
-          "path": "audio/sets/pop_20251220_mg_only_output/import/components/mixture.wav",
-          "kind": "mixture"
-        },
-        {
-          "label": "出力音源（MetricGAN+なし）",
-          "path": "audio/sets/pop_20251220_mg_only_output/import/components/output.wav",
-          "kind": "output_no_metricgan"
-        },
-        {
-          "label": "元の環境音",
-          "path": "audio/sets/pop_20251220_mg_only_output/import/components/target.wav",
-          "kind": "target"
-        }
-      ],
-      "title_ja": "20251220_mg_only / output",
-      "title_en": "20251220_mg_only / output",
-      "description_ja": "出力結果",
-      "description_en": "Output result"
     },
     {
       "id": "pop_20251215_cmp_msup_quick_report",
@@ -165,16 +128,6 @@
       ],
       "changes_en": [
         "Added a quality comparison"
-      ]
-    },
-    "2025-12-20": {
-      "summary_ja": "MetricGAN+比較",
-      "summary_en": "MetricGAN+ comparison",
-      "changes_ja": [
-        "MetricGAN+あり/なしの比較を追加"
-      ],
-      "changes_en": [
-        "Added with/without MetricGAN+ comparison"
       ]
     },
     "2025-11-25": {

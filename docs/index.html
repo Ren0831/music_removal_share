@@ -34,7 +34,8 @@
     .langBtn:hover { background: #eef4ff; }
     .mainContent { display: none; }
     .mainContent.visible { display: block; }
-    .programTabs { display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap; }
+    .langRow { margin-bottom: 18px; }
+    .programTabs { display: flex; gap: 8px; margin-top: 4px; margin-bottom: 16px; flex-wrap: wrap; }
     .programTab {
       padding: 10px 18px; border: 1px solid #ccc; border-radius: 8px; background: #f5f5f5;
       cursor: pointer; font-weight: 600;
@@ -51,10 +52,14 @@
     <button class="langBtn" data-lang="en">English</button>
   </div>
 
-  <div id="mainContent" class="mainContent">
+    <div id="mainContent" class="mainContent">
     <h1 id="pageTitle">音楽除去 サンプル音源まとめ</h1>
     <div id="pageIntro" class="small">音楽除去実験で出力した音源が視聴できます。プログラムごとに最新と比較用の約2本の出力を表示します。</div>
-    <div class="small" style="margin-top:6px;">
+    <div class="shareBox small" style="margin-top:12px; margin-bottom:14px;">
+      <a id="pageUrlLink" href="https://ren0831.github.io/music_removal_share/" target="_blank" rel="noopener">https://ren0831.github.io/music_removal_share/</a>
+      <img id="qrImage" src="qr/all_samples.png" alt="QR code" style="vertical-align:middle; margin-left:12px; width:64px; height:64px;" />
+    </div>
+    <div class="langRow small" style="margin-top:10px;">
       <label for="langSelect">Language:</label>
       <select id="langSelect" aria-label="Language">
         <option value="ja">日本語</option>
@@ -227,16 +232,21 @@
       $("langSelect").value = currentLang;
     }
 
+    function setError(msg) {
+      const el = $("error");
+      if (el) el.textContent = msg;
+    }
+
     async function initPage() {
       try {
+        setError("");
         const resp = await fetch("manifest.json?ts=" + Date.now(), { cache: "no-store" });
-        if (!resp.ok) throw new Error(`manifest load failed: ${resp.status}`);
+        if (!resp.ok) throw new Error("manifest load failed: " + resp.status);
         manifestData = await resp.json();
 
-        const sets = Array.isArray(manifestData.sets) ? manifestData.sets : [];
+        const sets = Array.isArray(manifestData && manifestData.sets) ? manifestData.sets : [];
         if (sets.length === 0) throw new Error("No sets found in manifest");
 
-        // Determine shared base audio (mixture/target). These stay fixed; only outputs change.
         sharedBase = { mixture: null, target: null };
         for (const s of sets) {
           if (!s || !Array.isArray(s.items)) continue;
@@ -251,6 +261,7 @@
 
         const programNames = [...new Set(sets.map((s) => (s.program || "MR").trim()).filter(Boolean))].sort();
         const tabContainer = $("programTabs");
+        if (!tabContainer) throw new Error("programTabs element not found");
         tabContainer.innerHTML = programNames.map((p) => `<button type="button" class="programTab" role="tab" data-program="${escapeHtml(p)}">${escapeHtml(p)}</button>`).join("");
 
         let currentProgram = programNames.length ? programNames[0] : null;
@@ -267,17 +278,18 @@
         renderProgramPage(currentProgram);
 
         const langSel = $("langSelect");
-        langSel.value = currentLang;
-        langSel.addEventListener("change", () => {
-          currentLang = langSel.value === "en" ? "en" : "ja";
-          localStorage.setItem("lang", currentLang);
-          applyLang();
-          if (currentProgram) renderProgramPage(currentProgram);
-        });
-
+        if (langSel) {
+          langSel.value = currentLang;
+          langSel.addEventListener("change", () => {
+            currentLang = langSel.value === "en" ? "en" : "ja";
+            localStorage.setItem("lang", currentLang);
+            applyLang();
+            if (currentProgram) renderProgramPage(currentProgram);
+          });
+        }
         applyLang();
       } catch (e) {
-        $("error").textContent = `Error: ${e && e.message ? e.message : e}`;
+        setError("Error: " + (e && e.message ? e.message : String(e)));
       }
     }
 

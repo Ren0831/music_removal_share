@@ -52,13 +52,9 @@
     <button class="langBtn" data-lang="en">English</button>
   </div>
 
-    <div id="mainContent" class="mainContent">
+  <div id="mainContent" class="mainContent">
     <h1 id="pageTitle">音楽除去 サンプル音源まとめ</h1>
     <div id="pageIntro" class="small">音楽除去実験で出力した音源が視聴できます。プログラムごとに最新と比較用の約2本の出力を表示します。</div>
-    <div class="shareBox small" style="margin-top:12px; margin-bottom:14px;">
-      <a id="pageUrlLink" href="https://rs2775.github.io/music_removal_share/" target="_blank" rel="noopener">https://rs2775.github.io/music_removal_share/</a>
-      <img id="qrImage" src="qr/all_samples.png" alt="QR code" style="vertical-align:middle; margin-left:12px; width:64px; height:64px;" />
-    </div>
     <div class="langRow small" style="margin-top:10px;">
       <label for="langSelect">Language:</label>
       <select id="langSelect" aria-label="Language">
@@ -67,7 +63,9 @@
       </select>
     </div>
 
+    <div id="programLabel" class="small" style="margin-bottom:4px;">手法を選択</div>
     <div id="programTabs" class="programTabs" role="tablist"></div>
+    <div id="programDescription" class="small" style="margin-top:-2px; margin-bottom:8px;"></div>
     <div id="error" class="error small" style="margin-top:8px;"></div>
     <div id="cards" class="grid" aria-live="polite" style="margin-top:12px;"></div>
   </div>
@@ -90,6 +88,13 @@
         pageIntro: "音楽除去実験で出力した音源が視聴できます。プログラムごとに最新と比較用の約2本の出力を表示します。",
         outputLatest: "最新出力",
         outputComparison: "比較用出力",
+        programLabel: "手法を選択",
+        programDescriptions: {
+          MR: "日常の音から音楽をできるだけ取り除き、まわりの環境音を聞きやすくした結果です。",
+          BD: "別の設定で音楽を減らした結果で、静かさと聞き取りやすさのバランスを変えています。",
+          TEL: "電話のような音声を想定した条件で音楽を減らした結果です。",
+          default: "この手法で音楽を減らした結果です。"
+        },
         labelsByKind: {
           mixture: "混合音源",
           target: "元の環境音",
@@ -107,6 +112,13 @@
         pageIntro: "You can listen to audio outputs from music removal experiments. Each program shows shared mixture/target and about two outputs (latest and comparison).",
         outputLatest: "Latest output",
         outputComparison: "Comparison output",
+        programLabel: "Select method",
+        programDescriptions: {
+          MR: "Removes as much music as possible from everyday sounds so that surrounding environmental sounds are easier to hear.",
+          BD: "Uses a different setting to reduce music, changing the balance between quietness and how easy it is to hear other sounds.",
+          TEL: "Designed for phone-like audio, reducing music while keeping voices easy to understand.",
+          default: "Results of this method for reducing music."
+        },
         labelsByKind: {
           mixture: "Mixture",
           target: "Target",
@@ -208,6 +220,14 @@
       `;
     }
 
+    function updateProgramDescription(programName) {
+      const box = $("programDescription");
+      if (!box) return;
+      const descMap = (I18N[currentLang] && I18N[currentLang].programDescriptions) || {};
+      const key = (programName && descMap[programName]) ? programName : "default";
+      box.textContent = descMap[key] || "";
+    }
+
     function renderProgramPage(programName) {
       const cards = [];
       if (sharedBase.mixture && sharedBase.mixture.path)
@@ -223,6 +243,7 @@
         cards.push(renderSingleCard(I18N[currentLang].outputComparison, outputs[1].path));
 
       $("cards").innerHTML = cards.join("");
+      updateProgramDescription(programName);
     }
 
     function applyLang() {
@@ -230,6 +251,8 @@
       $("pageTitle").textContent = t.pageTitle;
       $("pageIntro").textContent = t.pageIntro;
       $("langSelect").value = currentLang;
+      const pl = $("programLabel");
+      if (pl && t.programLabel) pl.textContent = t.programLabel;
     }
 
     function setError(msg) {

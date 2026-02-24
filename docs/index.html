@@ -90,10 +90,10 @@
         outputComparison: "比較用出力",
         programLabel: "手法を選択",
         programDescriptions: {
-          MR: "日常の音から音楽をできるだけ取り除き、まわりの環境音を聞きやすくした結果です。",
-          BD: "逆拡散モデルを用いて音の時間的な変化を学習し、音楽だけを少しずつ取り除いて周囲の音を残した結果です。",
-          TEL: "電話のような音声を想定した条件で音楽を減らした結果です。",
-          default: "この手法で音楽を減らした結果です。"
+          MR: "日常の音から音楽成分をできるだけ取り除き、環境音や人の声を聞きやすくすることを目的とした手法です。",
+          BD: "逆拡散モデルを用いて音の時間的な変化を学習し、音楽だけを少しずつ取り除いて周囲の音を残すことを狙った手法です。",
+          TEL: "電話やオンライン会議の音声を想定し、人の声を聞き取りやすくすることを目的とした手法です。",
+          default: "この手法で音楽を減らすための手法です。"
         },
         labelsByKind: {
           mixture: "混合音源",
@@ -114,10 +114,10 @@
         outputComparison: "Comparison output",
         programLabel: "Select method",
         programDescriptions: {
-          MR: "Removes as much music as possible from everyday sounds so that surrounding environmental sounds are easier to hear.",
-          BD: "Uses a reverse diffusion model that learns how sound changes over time and gradually removes only the music while keeping surrounding sounds.",
-          TEL: "Designed for phone-like audio, reducing music while keeping voices easy to understand.",
-          default: "Results of this method for reducing music."
+          MR: "A method that removes as much background music as possible from everyday sounds so that environmental sounds and voices are easier to hear.",
+          BD: "A method based on a reverse diffusion model that learns how sound changes over time and gradually removes only the music while keeping surrounding sounds.",
+          TEL: "A method designed for phone or online call audio, reducing music so that voices remain easy to understand.",
+          default: "A method used for reducing music in this experiment."
         },
         labelsByKind: {
           mixture: "Mixture",

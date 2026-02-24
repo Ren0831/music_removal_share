@@ -34,6 +34,13 @@
     .langBtn:hover { background: #eef4ff; }
     .mainContent { display: none; }
     .mainContent.visible { display: block; }
+    .programTabs { display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap; }
+    .programTab {
+      padding: 10px 18px; border: 1px solid #ccc; border-radius: 8px; background: #f5f5f5;
+      cursor: pointer; font-weight: 600;
+    }
+    .programTab:hover { background: #eee; }
+    .programTab.active { background: #2d6cdf; color: #fff; border-color: #2d6cdf; }
     @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>
@@ -46,7 +53,7 @@
 
   <div id="mainContent" class="mainContent">
     <h1 id="pageTitle">音楽除去 サンプル音源まとめ</h1>
-    <div id="pageIntro" class="small">音楽除去実験で出力した音源が視聴できます。</div>
+    <div id="pageIntro" class="small">音楽除去実験で出力した音源が視聴できます。プログラムごとに最新と比較用の約2本の出力を表示します。</div>
     <div class="small" style="margin-top:6px;">
       <label for="langSelect">Language:</label>
       <select id="langSelect" aria-label="Language">
@@ -55,17 +62,9 @@
       </select>
     </div>
 
-    <div class="row">
-      <div class="panel left">
-        <div id="pickDateLabel" class="small" style="margin-bottom:6px;">変更内容を選択</div>
-        <select id="dateSelect" aria-label="Choose change"></select>
-        <div id="error" class="error small" style="margin-top:12px;"></div>
-      </div>
-
-      <div class="panel right">
-        <div id="cards" class="grid" aria-live="polite"></div>
-      </div>
-    </div>
+    <div id="programTabs" class="programTabs" role="tablist"></div>
+    <div id="error" class="error small" style="margin-top:8px;"></div>
+    <div id="cards" class="grid" aria-live="polite" style="margin-top:12px;"></div>
   </div>
 
   <script>
@@ -83,8 +82,9 @@
     const I18N = {
       ja: {
         pageTitle: "音楽除去 サンプル音源まとめ",
-        pageIntro: "音楽除去実験で出力した音源が視聴できます。",
-        pickDate: "変更内容を選択",
+        pageIntro: "音楽除去実験で出力した音源が視聴できます。プログラムごとに最新と比較用の約2本の出力を表示します。",
+        outputLatest: "最新出力",
+        outputComparison: "比較用出力",
         labelsByKind: {
           mixture: "混合音源",
           target: "元の環境音",
@@ -99,8 +99,9 @@
       },
       en: {
         pageTitle: "Music Removal Sample Audio Collection",
-        pageIntro: "You can listen to audio outputs from music removal experiments.",
-        pickDate: "Select change",
+        pageIntro: "You can listen to audio outputs from music removal experiments. Each program shows shared mixture/target and about two outputs (latest and comparison).",
+        outputLatest: "Latest output",
+        outputComparison: "Comparison output",
         labelsByKind: {
           mixture: "Mixture",
           target: "Target",
@@ -149,138 +150,72 @@
 
     let sharedBase = { mixture: null, target: null };
 
-    function findFirstKind(items, kind) {
-      if (!Array.isArray(items)) return null;
-      return items.find((it) => it && String(it.kind || "") === kind) || null;
-    }
-
-    function renderAudio(selectedSet) {
-      const cards = [];
-
-      if (!selectedSet || !Array.isArray(selectedSet.items)) {
-        $("cards").innerHTML = "";
-        return;
-      }
-
-      const baseMixture = sharedBase.mixture || findFirstKind(selectedSet.items, "mixture");
-      const baseTarget = sharedBase.target || findFirstKind(selectedSet.items, "target");
-
-      function renderSingleCard(labelText, path) {
-        if (!path) return;
-        cards.push(`
-          <div class="card">
-            <div class="label">${escapeHtml(labelText)}</div>
-            <audio controls preload="none" src="${escapeHtml(path)}"></audio>
-          </div>
-        `);
-      }
-
-      // Base (shared across selections): mixture + target
-      if (baseMixture && baseMixture.path) {
-        renderSingleCard(I18N[currentLang].labelsByKind.mixture, baseMixture.path);
-      }
-      if (baseTarget && baseTarget.path) {
-        renderSingleCard(I18N[currentLang].labelsByKind.target, baseTarget.path);
-      }
-
-      // Outputs only (the part that changes with the selection)
-      const outputItems = selectedSet.items.filter((it) => {
+    function getOutputItems(set) {
+      if (!set || !Array.isArray(set.items)) return [];
+      return set.items.filter((it) => {
         const k = (it && it.kind) ? String(it.kind) : "";
         return k === "output" || k.startsWith("output_");
       });
+    }
 
-      // Classify each output by method + MetricGAN usage.
-      // method: old | new | other
-      // mg: with_metricgan | no_metricgan | other
-      const classified = outputItems.map((it) => {
-        const kind = String(it.kind || "");
-        const labelStr = String(it.label || "");
-        const pathStr = String(it.path || "");
-        const fileText = (labelStr + " " + pathStr).toLowerCase();
-
-        let method = "other";
-        if (kind === "output_old" || fileText.includes("従来") || fileText.includes("_old") || fileText.includes("old.wav")) method = "old";
-        if (kind === "output_new" || fileText.includes("提案") || fileText.includes("_new") || fileText.includes("new.wav")) method = "new";
-
-        let mg = "other";
-        if (kind === "output_with_metricgan" || kind === "output_improved") mg = "with_metricgan";
-        else if (kind === "output_no_metricgan" || kind === "output_baseline") mg = "no_metricgan";
-
-        // In English mode, never show Japanese labels from manifest.
-        // Prefer kind-based labels; fallback to filename.
-        let itemLabel = "";
-        if (currentLang === "en") {
-          itemLabel = I18N[currentLang].labelsByKind[kind] || I18N[currentLang].labelsByKind.output;
-          if (!itemLabel) {
-            const fn = (pathStr.split("/").pop() || "").trim();
-            itemLabel = fn ? ("Audio (" + fn + ")") : "Audio";
-          }
-        } else {
-          itemLabel = it.label || I18N[currentLang].labelsByKind[kind] || I18N[currentLang].labelsByKind.output;
-        }
-        return { label: itemLabel, path: it.path, method, mg };
+    function pickLatestAndComparisonOutputs(setsForProgram) {
+      if (!setsForProgram || setsForProgram.length === 0) return [];
+      const sorted = [...setsForProgram].sort((a, b) => {
+        const da = dateKey(a);
+        const db = dateKey(b);
+        if (da === "unknown" && db === "unknown") return 0;
+        if (da === "unknown") return 1;
+        if (db === "unknown") return -1;
+        return da > db ? -1 : (da < db ? 1 : 0);
       });
+      const latestSet = sorted[0];
+      const comparisonSet = sorted.length > 1 ? sorted[1] : null;
+      const outLatest = getOutputItems(latestSet);
+      const outComp = comparisonSet ? getOutputItems(comparisonSet) : [];
+      const preferKind = (it) => {
+        const k = String(it.kind || "");
+        if (k === "output_improved" || k === "output_with_metricgan") return 2;
+        if (k === "output_new") return 2;
+        if (k.indexOf("distill") >= 0 || (it.path && it.path.toLowerCase().indexOf("distill") >= 0)) return 2;
+        if (k === "output_baseline" || k === "output_no_metricgan") return 0;
+        if (k === "output_old") return 0;
+        return 1;
+      };
+      outLatest.sort((a, b) => preferKind(b) - preferKind(a));
+      outComp.sort((a, b) => preferKind(b) - preferKind(a));
+      const latestItem = outLatest[0] || null;
+      let comparisonItem = null;
+      if (outLatest.length >= 2) comparisonItem = outLatest[1];
+      else if (outComp.length >= 1) comparisonItem = outComp[0];
+      const result = [];
+      if (latestItem) result.push(latestItem);
+      if (comparisonItem && comparisonItem !== latestItem) result.push(comparisonItem);
+      return result;
+    }
 
-      function renderSectionTitle(title) {
-        cards.push(`<div class="card" style="grid-column: 1 / -1;"><div class="label" style="font-size: 1.1rem; margin-bottom: 2px;">${escapeHtml(title)}</div></div>`);
-      }
+    function renderSingleCard(labelText, path) {
+      if (!path) return "";
+      return `
+        <div class="card">
+          <div class="label">${escapeHtml(labelText)}</div>
+          <audio controls preload="none" src="${escapeHtml(path)}"></audio>
+        </div>
+      `;
+    }
 
-      function renderOutputList(items) {
-        for (const it of items) {
-          renderSingleCard(it.label, it.path);
-        }
-      }
+    function renderProgramPage(programName) {
+      const cards = [];
+      if (sharedBase.mixture && sharedBase.mixture.path)
+        cards.push(renderSingleCard(I18N[currentLang].labelsByKind.mixture, sharedBase.mixture.path));
+      if (sharedBase.target && sharedBase.target.path)
+        cards.push(renderSingleCard(I18N[currentLang].labelsByKind.target, sharedBase.target.path));
 
-      function renderMethodBlock(methodKey, items) {
-        if (!items || items.length === 0) return;
-        const title =
-          methodKey === "old" ? (I18N[currentLang].labelsByKind.output_old || (currentLang === "ja" ? "出力音源（従来手法）" : "Output (traditional)")) :
-          methodKey === "new" ? (I18N[currentLang].labelsByKind.output_new || (currentLang === "ja" ? "出力音源（提案手法）" : "Output (proposed)")) :
-          I18N[currentLang].labelsByKind.output;
-
-        renderSectionTitle(title);
-        const noMG = items.filter((x) => x.mg === "no_metricgan");
-        const withMG = items.filter((x) => x.mg === "with_metricgan");
-        const other = items.filter((x) => x.mg === "other");
-
-        if (noMG.length > 0 || withMG.length > 0) {
-          if (noMG.length > 0) {
-            renderSectionTitle(I18N[currentLang].labelsByKind.output_no_metricgan);
-            renderOutputList(noMG);
-          }
-          if (withMG.length > 0) {
-            renderSectionTitle(I18N[currentLang].labelsByKind.output_with_metricgan);
-            renderOutputList(withMG);
-          }
-          renderOutputList(other);
-        } else {
-          renderOutputList(items);
-        }
-      }
-
-      const hasMethod = classified.some((x) => x.method === "old" || x.method === "new");
-      if (hasMethod) {
-        renderMethodBlock("old", classified.filter((x) => x.method === "old"));
-        renderMethodBlock("new", classified.filter((x) => x.method === "new"));
-        renderMethodBlock("other", classified.filter((x) => x.method === "other"));
-      } else {
-        const noMG = classified.filter((x) => x.mg === "no_metricgan");
-        const withMG = classified.filter((x) => x.mg === "with_metricgan");
-        const other = classified.filter((x) => x.mg === "other");
-
-        if (noMG.length > 0) {
-          renderSectionTitle(I18N[currentLang].labelsByKind.output_no_metricgan);
-          renderOutputList(noMG);
-        }
-        if (withMG.length > 0) {
-          renderSectionTitle(I18N[currentLang].labelsByKind.output_with_metricgan);
-          renderOutputList(withMG);
-        }
-        if (other.length > 0 && (noMG.length > 0 || withMG.length > 0)) {
-          renderSectionTitle(I18N[currentLang].labelsByKind.output);
-        }
-        renderOutputList(other);
-      }
+      const setsForProgram = (manifestData.sets || []).filter((s) => (s.program || "MR").trim() === programName);
+      const outputs = pickLatestAndComparisonOutputs(setsForProgram);
+      if (outputs.length >= 1)
+        cards.push(renderSingleCard(I18N[currentLang].outputLatest, outputs[0].path));
+      if (outputs.length >= 2)
+        cards.push(renderSingleCard(I18N[currentLang].outputComparison, outputs[1].path));
 
       $("cards").innerHTML = cards.join("");
     }
@@ -289,7 +224,6 @@
       const t = I18N[currentLang];
       $("pageTitle").textContent = t.pageTitle;
       $("pageIntro").textContent = t.pageIntro;
-      $("pickDateLabel").textContent = t.pickDate;
       $("langSelect").value = currentLang;
     }
 
@@ -315,80 +249,30 @@
           }
         }
 
-        const byId = new Map(sets.map((s) => [s.id, s]));
-        const latestSetId = (manifestData.latest_set_id && byId.has(manifestData.latest_set_id)) ? manifestData.latest_set_id : null;
-        const dateMeta = (manifestData.date_meta && typeof manifestData.date_meta === "object") ? manifestData.date_meta : {};
+        const programNames = [...new Set(sets.map((s) => (s.program || "MR").trim()).filter(Boolean))].sort();
+        const tabContainer = $("programTabs");
+        tabContainer.innerHTML = programNames.map((p) => `<button type="button" class="programTab" role="tab" data-program="${escapeHtml(p)}">${escapeHtml(p)}</button>`).join("");
 
-        // Group sets by date
-        const byDate = new Map();
-        for (const s of sets) {
-          const k = dateKey(s);
-          if (!byDate.has(k)) byDate.set(k, []);
-          byDate.get(k).push(s);
-        }
-        
-        // Sort dates: oldest -> newest
-        const dates = Array.from(byDate.keys()).sort((a, b) => {
-          if (a === "unknown") return 1;
-          if (b === "unknown") return -1;
-          return a < b ? -1 : (a > b ? 1 : 0);
+        let currentProgram = programNames.length ? programNames[0] : null;
+        tabContainer.querySelectorAll(".programTab").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            currentProgram = btn.getAttribute("data-program");
+            tabContainer.querySelectorAll(".programTab").forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            renderProgramPage(currentProgram);
+          });
         });
+        const firstTab = tabContainer.querySelector(".programTab");
+        if (firstTab) firstTab.classList.add("active");
+        renderProgramPage(currentProgram);
 
-        // Build date select options: summary + date
-        const dateSel = $("dateSelect");
-        const latestDate = latestSetId ? dateKey(byId.get(latestSetId)) : null;
-        
-        dateSel.innerHTML = dates.map((d) => {
-          const m = dateMeta[d] || {};
-          const summary = currentLang === "en"
-            ? (m.summary_en || m.summary || "")
-            : (m.summary_ja || m.summary || "");
-          const label = summary ? `${summary} (${d})` : d;
-          const suffix = (latestDate && d === latestDate)
-            ? (currentLang === "en" ? " (latest)" : " (最新)")
-            : "";
-          return `<option value="${escapeHtml(d)}">${escapeHtml(label + suffix)}</option>`;
-        }).join("");
-
-        // Prefer latestDate if available, otherwise use the newest date (last in sorted array)
-        const initialDate = (latestDate && byDate.has(latestDate)) ? latestDate : (dates.length > 0 ? dates[dates.length - 1] : dates[0]);
-        let currentDate = initialDate;
-
-        function selectDate(dateKeyStr) {
-          currentDate = dateKeyStr;
-          const list = byDate.get(dateKeyStr) || [];
-          // Prefer latest set if it's in this date, else first set
-          const prefer = (latestSetId && list.some((s) => s.id === latestSetId)) ? latestSetId : (list[0] ? list[0].id : null);
-          const selectedSet = prefer && byId.has(prefer) ? byId.get(prefer) : null;
-          renderAudio(selectedSet);
-        }
-
-        dateSel.value = initialDate;
-        selectDate(initialDate);
-
-        dateSel.addEventListener("change", () => {
-          selectDate(dateSel.value);
-        });
-
-        // Language selector
         const langSel = $("langSelect");
         langSel.value = currentLang;
         langSel.addEventListener("change", () => {
           currentLang = langSel.value === "en" ? "en" : "ja";
           localStorage.setItem("lang", currentLang);
           applyLang();
-          // Re-render date options
-          dateSel.innerHTML = dates.map((d) => {
-            const m = dateMeta[d] || {};
-            const summary = currentLang === "en"
-              ? (m.summary_en || m.summary || "")
-              : (m.summary_ja || m.summary || "");
-            const label = summary ? `${summary} (${d})` : d;
-            const suffix = (latestDate && d === latestDate) ? (currentLang === "en" ? " (latest)" : " (最新)") : "";
-            return `<option value="${escapeHtml(d)}">${escapeHtml(label + suffix)}</option>`;
-          }).join("");
-          dateSel.value = currentDate;
-          selectDate(currentDate);
+          if (currentProgram) renderProgramPage(currentProgram);
         });
 
         applyLang();

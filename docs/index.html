@@ -90,10 +90,10 @@
         outputComparison: "比較用出力",
         programLabel: "手法を選択",
         programDescriptions: {
-          MR: "日常の音から音楽成分をできるだけ取り除き、環境音や人の声を聞きやすくすることを目的とした手法です。",
-          BD: "逆拡散モデルを用いて音の時間的な変化を学習し、音楽だけを少しずつ取り除いて周囲の音を残すことを狙った手法です。",
-          TEL: "電話やオンライン会議の音声を想定し、相手の声がはっきり聞こえるように音楽や余分な音を抑える手法です。",
-          default: "この手法で音楽を減らすための手法です。"
+          MR: "ニューラルネットワークを用いたモデルの出力です。",
+          BD: "逆拡散モデルを用いたモデルの出力です。",
+          TEL: "トランスフォーマーを用いたモデルの出力です。",
+          default: "この手法で学習したモデルの出力です。"
         },
         labelsByKind: {
           mixture: "混合音源",
@@ -114,10 +114,10 @@
         outputComparison: "Comparison output",
         programLabel: "Select method",
         programDescriptions: {
-          MR: "A method that removes as much background music as possible from everyday sounds so that environmental sounds and voices are easier to hear.",
-          BD: "A method based on a reverse diffusion model that learns how sound changes over time and gradually removes only the music while keeping surrounding sounds.",
-          TEL: "A method designed for phone or online call audio that reduces music and extra sounds so that the other person's voice stays clear.",
-          default: "A method used for reducing music in this experiment."
+          MR: "Output of a model based on a neural network.",
+          BD: "Output of a model based on a reverse diffusion model.",
+          TEL: "Output of a model based on a transformer.",
+          default: "Output of the model used for this method."
         },
         labelsByKind: {
           mixture: "Mixture",

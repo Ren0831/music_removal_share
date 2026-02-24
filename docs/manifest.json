@@ -1,9 +1,103 @@
 {
   "version": 1,
-  "generated_at": "2026-02-03T05:18:52Z",
+  "generated_at": "2026-02-24T06:00:25Z",
   "pages_url": "https://ren0831.github.io/music_removal_share/",
-  "latest_set_id": "pop_results_20260124",
+  "latest_set_id": "pop_tel_run_20260206_152855_all",
   "sets": [
+    {
+      "id": "pop_tel_run_20260206_152855_all",
+      "title": "run_20260206_152855 / all",
+      "date": "2026-02-06",
+      "description": "",
+      "items": [
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_tel_run_20260206_152855_all/import/demo_samples_yaml/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_tel_run_20260206_152855_all/import/demo_samples_yaml/mixed.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "出力音源（MetricGAN+なし）",
+          "path": "audio/sets/pop_tel_run_20260206_152855_all/import/demo_samples_yaml/output.wav",
+          "kind": "output_no_metricgan"
+        },
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_tel_run_20260206_152855_all/import/demo_samples_yaml/extras/render_samples_yaml/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_tel_run_20260206_152855_all/import/demo_samples_yaml/extras/render_samples_yaml/mixed.wav",
+          "kind": "mixture"
+        }
+      ],
+      "program": "TEL",
+      "title_ja": "run_20260206_152855 / all",
+      "title_en": "run_20260206_152855 / all",
+      "description_ja": "",
+      "description_en": ""
+    },
+    {
+      "id": "pop_bd_run_20260209_02_all",
+      "title": "run_20260209_02 / all",
+      "date": "2026-02-09",
+      "description": "",
+      "items": [
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_bd_run_20260209_02_all/import/sample_check/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_bd_run_20260209_02_all/import/sample_check/mixed.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "出力音源（MetricGAN+なし）",
+          "path": "audio/sets/pop_bd_run_20260209_02_all/import/sample_check/output.wav",
+          "kind": "output_no_metricgan"
+        }
+      ],
+      "program": "BD",
+      "title_ja": "run_20260209_02 / all",
+      "title_en": "run_20260209_02 / all",
+      "description_ja": "",
+      "description_en": ""
+    },
+    {
+      "id": "pop_bd_run_20260204_03_all",
+      "title": "run_20260204_03 / all",
+      "date": "2026-02-04",
+      "description": "",
+      "items": [
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_bd_run_20260204_03_all/import/sample_check/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_bd_run_20260204_03_all/import/sample_check/mixed.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "出力音源（MetricGAN+なし）",
+          "path": "audio/sets/pop_bd_run_20260204_03_all/import/sample_check/output.wav",
+          "kind": "output_no_metricgan"
+        }
+      ],
+      "program": "BD",
+      "title_ja": "run_20260204_03 / all",
+      "title_en": "run_20260204_03 / all",
+      "description_ja": "",
+      "description_en": ""
+    },
     {
       "id": "pop_results_20260124",
       "title": "results_20260124",
@@ -116,6 +210,36 @@
       ],
       "changes_en": [
         "Added traditional vs proposed comparison"
+      ]
+    },
+    "2026-02-04": {
+      "summary_ja": "Pop results (2026-02-04)",
+      "summary_en": "Pop results (2026-02-04)",
+      "changes_ja": [
+        "初回"
+      ],
+      "changes_en": [
+        "First entry"
+      ]
+    },
+    "2026-02-09": {
+      "summary_ja": "Pop results (2026-02-09)",
+      "summary_en": "Pop results (2026-02-09)",
+      "changes_ja": [
+        "（変更点メモなし）"
+      ],
+      "changes_en": [
+        "(no notes)"
+      ]
+    },
+    "2026-02-06": {
+      "summary_ja": "Pop results (2026-02-06)",
+      "summary_en": "Pop results (2026-02-06)",
+      "changes_ja": [
+        "初回"
+      ],
+      "changes_en": [
+        "First entry"
       ]
     }
   }

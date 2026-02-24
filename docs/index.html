@@ -91,7 +91,7 @@
         programLabel: "手法を選択",
         programDescriptions: {
           MR: "日常の音から音楽をできるだけ取り除き、まわりの環境音を聞きやすくした結果です。",
-          BD: "別の設定で音楽を減らした結果で、静かさと聞き取りやすさのバランスを変えています。",
+          BD: "逆拡散モデルを用いて音の時間的な変化を学習し、音楽だけを少しずつ取り除いて周囲の音を残した結果です。",
           TEL: "電話のような音声を想定した条件で音楽を減らした結果です。",
           default: "この手法で音楽を減らした結果です。"
         },
@@ -115,7 +115,7 @@
         programLabel: "Select method",
         programDescriptions: {
           MR: "Removes as much music as possible from everyday sounds so that surrounding environmental sounds are easier to hear.",
-          BD: "Uses a different setting to reduce music, changing the balance between quietness and how easy it is to hear other sounds.",
+          BD: "Uses a reverse diffusion model that learns how sound changes over time and gradually removes only the music while keeping surrounding sounds.",
           TEL: "Designed for phone-like audio, reducing music while keeping voices easy to understand.",
           default: "Results of this method for reducing music."
         },

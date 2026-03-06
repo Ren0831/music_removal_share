@@ -235,7 +235,13 @@
       if (sharedBase.target && sharedBase.target.path)
         cards.push(renderSingleCard(I18N[currentLang].labelsByKind.target, sharedBase.target.path));
 
-      const setsForProgram = (manifestData.sets || []).filter((s) => (s.program || "MR").trim() === programName);
+      let setsForProgram = (manifestData.sets || []).filter((s) => (s.program || "MR").trim() === programName);
+      const programLatest = manifestData.program_latest && typeof manifestData.program_latest === "object" ? manifestData.program_latest : null;
+      if (programLatest && programLatest[programName]) {
+        const preferredId = programLatest[programName];
+        const preferred = setsForProgram.find((s) => s.id === preferredId);
+        if (preferred) setsForProgram = [preferred, ...setsForProgram.filter((s) => s.id !== preferredId)];
+      }
       const outputs = pickLatestAndComparisonOutputs(setsForProgram);
       if (outputs.length >= 1)
         cards.push(renderSingleCard(I18N[currentLang].outputLatest, outputs[0].path));

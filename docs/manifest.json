@@ -1,9 +1,361 @@
 {
   "version": 1,
-  "generated_at": "2026-02-24T06:37:04Z",
+  "generated_at": "2026-03-06T03:21:39Z",
   "pages_url": "https://rs2775.github.io/music_removal_share/",
-  "latest_set_id": "pop_tel_run_20260206_152855_all",
+  "latest_set_id": "pop_use_samples_yaml_all",
   "sets": [
+    {
+      "id": "pop_use_samples_yaml_all",
+      "title": "use_samples_yaml / all",
+      "date": "unknown",
+      "description": "",
+      "items": [
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_use_samples_yaml_all/import/run_20260206_134051/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_use_samples_yaml_all/import/run_20260206_134051/mixed.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "出力音源（提案手法）",
+          "path": "audio/sets/pop_use_samples_yaml_all/import/run_20260206_134051/output_fixed_new.wav",
+          "kind": "output_new"
+        },
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_use_samples_yaml_all/import/run_20260206_134051/components/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_use_samples_yaml_all/import/run_20260206_134051/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "出力音源（MetricGAN+なし）",
+          "path": "audio/sets/pop_use_samples_yaml_all/import/run_20260206_134051/components/output.wav",
+          "kind": "output_no_metricgan"
+        },
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_use_samples_yaml_all/import/run_20260206_134051/components/target.wav",
+          "kind": "target"
+        }
+      ],
+      "program": "MR",
+      "title_ja": "use_samples_yaml / all",
+      "title_en": "use_samples_yaml / all",
+      "description_ja": "",
+      "description_en": ""
+    },
+    {
+      "id": "pop_use__all",
+      "title": "use_ / all",
+      "date": "unknown",
+      "description": "",
+      "items": [
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_use__all/import/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_use__all/import/mixed.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "出力音源（提案手法）",
+          "path": "audio/sets/pop_use__all/import/output_fixed_new.wav",
+          "kind": "output_new"
+        },
+        {
+          "label": "出力音源（従来手法）",
+          "path": "audio/sets/pop_use__all/import/output_fixed_old.wav",
+          "kind": "output_old"
+        }
+      ],
+      "program": "MR",
+      "title_ja": "use_ / all",
+      "title_en": "use_ / all",
+      "description_ja": "",
+      "description_en": ""
+    },
+    {
+      "id": "pop_run_20260124_fixed_all",
+      "title": "run_20260124_fixed / all",
+      "date": "2026-01-24",
+      "description": "",
+      "items": [
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_run_20260124_fixed_all/import/demo_fixed/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_run_20260124_fixed_all/import/demo_fixed/mixed.wav",
+          "kind": "mixture"
+        }
+      ],
+      "program": "MR",
+      "title_ja": "run_20260124_fixed / all",
+      "title_en": "run_20260124_fixed / all",
+      "description_ja": "",
+      "description_en": ""
+    },
+    {
+      "id": "pop_pack_20260124_waveform_assets_all",
+      "title": "pack_20260124_waveform_assets / all",
+      "date": "2026-01-24",
+      "description": "",
+      "items": [
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_pack_20260124_waveform_assets_all/import/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_pack_20260124_waveform_assets_all/import/mixed.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_pack_20260124_waveform_assets_all/import/baseline/components/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_pack_20260124_waveform_assets_all/import/baseline/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "出力音源（MetricGAN+なし）",
+          "path": "audio/sets/pop_pack_20260124_waveform_assets_all/import/baseline/components/output.wav",
+          "kind": "output_no_metricgan"
+        },
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_pack_20260124_waveform_assets_all/import/baseline/components/target.wav",
+          "kind": "target"
+        },
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_pack_20260124_waveform_assets_all/import/improved/components/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_pack_20260124_waveform_assets_all/import/improved/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "出力音源（MetricGAN+なし）",
+          "path": "audio/sets/pop_pack_20260124_waveform_assets_all/import/improved/components/output.wav",
+          "kind": "output_no_metricgan"
+        },
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_pack_20260124_waveform_assets_all/import/improved/components/target.wav",
+          "kind": "target"
+        }
+      ],
+      "program": "MR",
+      "title_ja": "pack_20260124_waveform_assets / all",
+      "title_en": "pack_20260124_waveform_assets / all",
+      "description_ja": "",
+      "description_en": ""
+    },
+    {
+      "id": "pop_20251220_mg_only_output",
+      "title": "20251220_mg_only / output",
+      "date": "2025-12-20",
+      "description": "出力結果",
+      "items": [
+        {
+          "label": "出力音源（MetricGAN+あり）",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/output_demo_sched.wav",
+          "kind": "output_with_metricgan"
+        },
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "出力音源（MetricGAN+なし）",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/output.wav",
+          "kind": "output_no_metricgan"
+        },
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/target.wav",
+          "kind": "target"
+        },
+        {
+          "label": "出力音源",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/sample_check_idx_000.wav",
+          "kind": "output"
+        },
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "出力音源（MetricGAN+なし）",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/output.wav",
+          "kind": "output_no_metricgan"
+        },
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_20251220_mg_only_output/import/components/target.wav",
+          "kind": "target"
+        }
+      ],
+      "program": "MR",
+      "title_ja": "20251220_mg_only / output",
+      "title_en": "20251220_mg_only / output",
+      "description_ja": "出力結果",
+      "description_en": "Output result"
+    },
+    {
+      "id": "pop_20251215_cmp_msup_quick_report",
+      "title": "20251215_cmp_msup_quick / report",
+      "date": "2025-12-15",
+      "description": "比較用",
+      "items": [
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/demo_environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/demo_mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "出力音源（MetricGAN+なし）",
+          "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/output_no_metricgan.wav",
+          "kind": "output_no_metricgan"
+        },
+        {
+          "label": "出力音源（MetricGAN+あり）",
+          "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/output_with_metricgan.wav",
+          "kind": "output_with_metricgan"
+        }
+      ],
+      "program": "MR",
+      "title_ja": "20251215_cmp_msup_quick / report",
+      "title_en": "20251215_cmp_msup_quick / report",
+      "description_ja": "比較用",
+      "description_en": "For comparison"
+    },
+    {
+      "id": "pop_20251210_cmp_quick_report",
+      "title": "20251210_cmp_quick / report",
+      "date": "2025-12-10",
+      "description": "比較用",
+      "items": [
+        {
+          "label": "出力音源（Baseline）",
+          "path": "audio/sets/pop_20251210_cmp_quick_report/import/baseline_output.wav",
+          "kind": "output_baseline"
+        },
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_20251210_cmp_quick_report/import/demo_environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_20251210_cmp_quick_report/import/demo_mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "出力音源（改善版）",
+          "path": "audio/sets/pop_20251210_cmp_quick_report/import/improved_output.wav",
+          "kind": "output_improved"
+        }
+      ],
+      "program": "MR",
+      "title_ja": "20251210_cmp_quick / report",
+      "title_en": "20251210_cmp_quick / report",
+      "description_ja": "比較用",
+      "description_en": "For comparison"
+    },
+    {
+      "id": "pop_20251129_listen_distill_output",
+      "title": "20251129_listen_distill / output",
+      "date": "2025-11-29",
+      "description": "出力結果",
+      "items": [
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_20251129_listen_distill_output/import/components/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "混合音源",
+          "path": "audio/sets/pop_20251129_listen_distill_output/import/components/mixture.wav",
+          "kind": "mixture"
+        },
+        {
+          "label": "出力音源（MetricGAN+なし）",
+          "path": "audio/sets/pop_20251129_listen_distill_output/import/components/output.wav",
+          "kind": "output_no_metricgan"
+        },
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_20251129_listen_distill_output/import/components/target.wav",
+          "kind": "target"
+        }
+      ],
+      "program": "MR",
+      "title_ja": "20251129_listen_distill / output",
+      "title_en": "20251129_listen_distill / output",
+      "description_ja": "出力結果",
+      "description_en": "Output result"
+    },
+    {
+      "id": "pop_20251125_best_share_best",
+      "title": "20251125_best_share / best",
+      "date": "2025-11-25",
+      "description": "最良結果",
+      "items": [
+        {
+          "label": "元の環境音",
+          "path": "audio/sets/pop_20251125_best_share_best/import/components/environment.wav",
+          "kind": "target"
+        },
+        {
+          "label": "出力音源（MetricGAN+なし）",
+          "path": "audio/sets/pop_20251125_best_share_best/import/components/output.wav",
+          "kind": "output_no_metricgan"
+        }
+      ],
+      "program": "MR",
+      "title_ja": "20251125_best_share / best",
+      "title_en": "20251125_best_share / best",
+      "description_ja": "最良結果",
+      "description_en": "Best result"
+    },
     {
       "id": "pop_tel_run_20260206_152855_all",
       "title": "run_20260206_152855 / all",
@@ -97,88 +449,6 @@
       "title_en": "run_20260204_03 / all",
       "description_ja": "",
       "description_en": ""
-    },
-    {
-      "id": "pop_results_20260124",
-      "title": "results_20260124",
-      "date": "2026-01-24",
-      "description": "",
-      "items": [
-        {
-          "label": "元の環境音",
-          "path": "audio/sets/pop_results_20260124/import/environment.wav",
-          "kind": "target"
-        },
-        {
-          "label": "混合音源",
-          "path": "audio/sets/pop_results_20260124/import/mixed.wav",
-          "kind": "mixture"
-        },
-        {
-          "label": "出力音源（提案手法）",
-          "path": "audio/sets/pop_results_20260124/import/output_fixed_new.wav",
-          "kind": "output_new"
-        },
-        {
-          "label": "出力音源（従来手法）",
-          "path": "audio/sets/pop_results_20260124/import/output_fixed_old.wav",
-          "kind": "output_old"
-        }
-      ]
-    },
-    {
-      "id": "pop_20251215_cmp_msup_quick_report",
-      "title": "20251215_cmp_msup_quick / report",
-      "date": "2025-12-15",
-      "description": "比較用",
-      "items": [
-        {
-          "label": "元の環境音",
-          "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/demo_environment.wav",
-          "kind": "target"
-        },
-        {
-          "label": "混合音源",
-          "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/demo_mixture.wav",
-          "kind": "mixture"
-        },
-        {
-          "label": "出力音源（MetricGAN+なし）",
-          "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/output_no_metricgan.wav",
-          "kind": "output_no_metricgan"
-        },
-        {
-          "label": "出力音源（MetricGAN+あり）",
-          "path": "audio/sets/pop_20251215_cmp_msup_quick_report/import/output_with_metricgan.wav",
-          "kind": "output_with_metricgan"
-        }
-      ],
-      "title_ja": "20251215_cmp_msup_quick / report",
-      "title_en": "20251215_cmp_msup_quick / report",
-      "description_ja": "比較用",
-      "description_en": "For comparison"
-    },
-    {
-      "id": "pop_20251125_best_share_best",
-      "title": "20251125_best_share / best",
-      "date": "2025-11-25",
-      "description": "最良結果",
-      "items": [
-        {
-          "label": "元の環境音",
-          "path": "audio/sets/pop_20251125_best_share_best/import/components/environment.wav",
-          "kind": "target"
-        },
-        {
-          "label": "出力音源（MetricGAN+なし）",
-          "path": "audio/sets/pop_20251125_best_share_best/import/components/output.wav",
-          "kind": "output_no_metricgan"
-        }
-      ],
-      "title_ja": "20251125_best_share / best",
-      "title_en": "20251125_best_share / best",
-      "description_ja": "最良結果",
-      "description_en": "Best result"
     }
   ],
   "date_meta": {
@@ -241,6 +511,39 @@
       "changes_en": [
         "First entry"
       ]
+    },
+    "2025-11-29": {
+      "summary_ja": "Single training run with a few sample_check variants.",
+      "summary_en": "Single training run with a few sample_check variants.",
+      "changes_ja": [
+        "（変更点メモなし）"
+      ],
+      "changes_en": [
+        "(no notes)"
+      ]
+    },
+    "2025-12-10": {
+      "summary_ja": "Older compare run (report-only).",
+      "summary_en": "Older compare run (report-only).",
+      "changes_ja": [
+        "（変更点メモなし）"
+      ],
+      "changes_en": [
+        "(no notes)"
+      ]
+    },
+    "2025-12-20": {
+      "summary_ja": "MetricGAN+ ON only (listen preset), 12 epochs.",
+      "summary_en": "MetricGAN+ ON only (listen preset), 12 epochs.",
+      "changes_ja": [
+        "（変更点メモなし）"
+      ],
+      "changes_en": [
+        "(no notes)"
+      ]
     }
+  },
+  "program_latest": {
+    "MR": "pop_use_samples_yaml_all"
   }
 }
